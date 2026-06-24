@@ -5,7 +5,7 @@ targets: [claude, codex]
 version: 1.0.0
 visibility: internal
 tags: [branding, design, presentations, pptx, deck]
-owner: bi-data@moburst.com
+owner: lital@moburst.com
 ---
 
 **Output is always a .pptx file** in `/mnt/user-data/outputs/`. Every deck, slide, or presentation request produces a `.pptx` built with pptxgenjs that re-opens cleanly in Google Slides or PowerPoint. Never produce HTML — not as a deliverable, not even as an intermediate.
