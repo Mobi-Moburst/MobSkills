@@ -81,5 +81,8 @@ in-memory. No database yet — that's Phase 2 (Supabase + GitHub API for live sy
 
 Approved phased plan lives in-repo at **`plans/mobskills-plan.md`** (read its top
 "Amendments" block first — it supersedes stale text). Phase 0–1 done (read-only portal,
-on `main`); Phase 2 = Supabase + GitHub sync; 3 = auth/RBAC (Supabase Auth + RLS);
-4 = analytics; 5 = editor/versioning UI. Phase 2+ is blocked on creating the Supabase project.
+on `main`); Phase 2 = Supabase + GitHub sync; 3 = auth/RBAC — **reuse Moburst's existing
+users**: verify the **shared Supabase project's** JWT (MobPulse's, via public JWKS — no
+`service_role` key), authz (roles + departments) **MobSkills-owned**, keyed by the shared
+user UUID (plan Amendment #9; no homegrown SSO, no auth SDK yet); 4 = analytics;
+5 = editor/versioning UI. Phase 2+ is blocked on creating the Supabase project.

@@ -1,15 +1,17 @@
 # MobSkills — Skills Repository & Management Portal (Detailed Plan)
 
-> ## ⚠️ Amendments (supersede anything below; updated 2026-06-24 after dual-engine review)
+> ## ⚠️ Amendments (supersede anything below; updated 2026-06-25 after dual-engine review)
 > When these conflict with text further down, **these win**.
 >
 > 1. **DB = Supabase**, not Neon (Moburst paid account; MobPulse uses it). A separate
->    Supabase project — **not yet created → Phase 2 is blocked on it.**
-> 2. **Phase 3 auth = Supabase Auth + Row-Level Security**, not Auth.js. Supabase
->    collapses DB + auth + per-department authz into one: Google SSO restricted to
->    `@moburst.com`; RLS policies enforce `public/internal/department` visibility in the
->    database, not hand-written `lib/access.ts` filters in every query. Keep `lib/access.ts`
->    only as a thin helper over RLS-scoped queries. Drizzle optional (may use Supabase SQL).
+>    Supabase project for MobSkills' **own data** — **not yet created → Phase 2 is blocked
+>    on it.** *(Refined by #9: only MobSkills' own data lives here; user **identity** is
+>    shared from MobPulse's project — "identity shared, data separate".)*
+> 2. **Phase 3 auth — see #9 (SUPERSEDED).** ~~Supabase Auth + RLS with Google SSO
+>    restricted to `@moburst.com`.~~ MobPulse (the shared identity source) uses
+>    **email/password, no Google SSO, no domain restriction** — so MobSkills does **not**
+>    stand up its own Google SSO; it reuses MobPulse's logins. RLS visibility + a thin
+>    `lib/access.ts` over RLS-scoped queries still hold. Drizzle optional.
 > 3. **Targets = Claude + Codex only.** ChatGPT dropped (schema + types already updated).
 > 4. **Localhost-only for now; Vercel deferred.** The GitHub **push webhook can't reach
 >    the app** → Phase 2 live-sync default is the **manual Resync button + cron**; the
@@ -25,6 +27,27 @@
 >    pinned historical downloads.
 > 8. **GitHub write credential:** classic PAT (`repo`+`workflow`). Fine-grained PATs 403
 >    on this personal-account collaborator repo — do NOT plan on them for prod.
+> 9. **Shared identity, MobSkills-owned authz (decided 2026-06-25; supersedes #2's auth
+>    model).** Goal: every Moburst app reuses the **same user accounts**. There is **no
+>    shared auth SDK** (MobPulse wires Supabase directly). Supabase's login pool is
+>    **per-project**, so to reuse logins MobSkills points its **auth at the same Supabase
+>    project that holds Moburst's users** (today, MobPulse's). MobSkills verifies the
+>    Supabase JWT against the **public JWKS** endpoint
+>    (`${SUPABASE_URL}/auth/v1/.well-known/jwks.json`) and reads the user's profile **only
+>    via the user's own token under RLS** — **never** MobPulse's `service_role` key, no
+>    privileged DB access. **Two projects:** shared-identity (verify token + read own
+>    profile) + MobSkills-data (skills/events/perms/departments), joined by the shared user
+>    **UUID** (plain value, no cross-project FK). **Authz is MobSkills-owned:** roles
+>    (`admin`/`editor`/`viewer`) + **departments** live in MobSkills' DB — MobPulse has
+>    roles but **no departments**, so req #6 ("per department") needs MobSkills to own this.
+>    **Build the seam, not the SDK:** write MobSkills auth as a thin, self-contained
+>    `lib/auth.ts` shaped *like* a future SDK's API; **extract a shared package only at the
+>    3rd consuming app** (rule of three — don't abstract from one). **Caveats:** (a) MobPulse
+>    accounts are admin-created (no self-serve) → a new MobSkills user must exist in the
+>    shared source first (its admin gatekeeps); (b) this **couples** MobSkills to the shared
+>    project's uptime + key stability; (c) strategic note — the bigger long-term lever is
+>    adopting **Google Workspace SSO / a managed IdP** (WorkOS/Clerk) as the Moburst-wide
+>    identity source rather than homegrown auth infra.
 
 ## Context
 
@@ -85,7 +108,7 @@ telemetry experimental; and sync-time validation as the real validation net.
 | Framework | **Next.js 15 (App Router) on Vercel**, version pinned | Stable `middleware.ts` semantics (Next 16 renames it to `proxy.ts`); App Router RSC for GitHub reads, route handlers for actions. Authz lives in the data layer regardless, so middleware/proxy is only defense-in-depth |
 | UI | **shadcn/ui + Tailwind**, `react-markdown` (+ `rehype-highlight`) for SKILL.md, **Recharts** for analytics | Consistent, quick to build |
 | DB | **Neon Postgres** (Vercel Marketplace) + **Drizzle ORM** | Serverless Postgres, typed queries/migrations |
-| Auth | **Auth.js (NextAuth v5)**, Google restricted to `@moburst.com`, **Drizzle adapter with explicit `session:{strategy:"jwt"}`** (adapter alone defaults to DB sessions); JWT carries `{userId, role, department_id}`, refreshed from DB in the `jwt` callback | Free, self-hosted, we own the user→department mapping (req. #6). First login upserts a `users` row. *Clerk is the managed alternative.* |
+| Auth | **See Amendment #9 (SUPERSEDES this row).** Reuse Moburst's existing users: MobSkills verifies the **shared Supabase project's** JWT via public JWKS and reads the user's own profile under RLS (no `service_role` key). Authz (role + department) is MobSkills-owned, keyed by the shared user UUID, in a thin `lib/auth.ts` seam (not an SDK yet). | Same login as MobPulse; we own the user→department mapping (req. #6). *~~Auth.js/Clerk~~ — not standing up our own SSO.* |
 | GitHub | **Octokit** — read content/trees/commits/tags; write via branch+commit+PR | Source of truth integration |
 | Download | **Zip the skill folder in-memory** (`jszip`): list just `skills/<slug>/**` via the Contents API (a handful of small files) → zip → stream. Whole-repo **zipball redirect** only as fallback | A single skill is tiny, so this stays well under Vercel's **4.5 MB response limit**; scoping to one folder avoids the recursive-tree truncation (100k/7 MB) that a whole-repo walk hits |
 
@@ -211,7 +234,12 @@ Indexes: `events(skill_id, created_at)`, `events(type, created_at)`,
   not just the endpoint. Not required for the core product.
 
 ### 6. Manage skills per user / department
-- **Auth.js** Google SSO restricted to `@moburst.com` — reject others in the
+> **Identity model superseded by Amendment #9.** Don't stand up our own SSO — reuse
+> Moburst's existing users by verifying the **shared Supabase project's** JWT (public
+> JWKS, no `service_role` key). The text below describes the original Auth.js approach
+> and is kept only for the role/department UI shape; authz (role + department) is
+> MobSkills-owned, keyed by the shared user UUID.
+- ~~**Auth.js** Google SSO restricted to `@moburst.com`~~ — reject others in the
   `signIn` callback (check `profile.email_verified` + the Google `hd` claim, not
   just the email suffix). **Drizzle adapter**; **JWT session** carries
   `{userId, role, department_id}`. First login upserts a `users` row; **admins
@@ -249,10 +277,11 @@ Indexes: `events(skill_id, created_at)`, `events(type, created_at)`,
 - **Phase 2 — DB + sync.** Provision Neon, Drizzle schema + migrations, `/api/sync`
   + push webhook + manual Resync + cron. *Done when:* editing a skill in the repo
   updates the catalog within seconds without redeploy.
-- **Phase 3 — Auth + RBAC (req. #6).** Auth.js Google SSO `@moburst.com`,
-  users/departments, role/department admin UI, access filtering. *Done when:* a
-  non-moburst account is rejected and a `department`-scoped skill is hidden from
-  outsiders.
+- **Phase 3 — Auth + RBAC (req. #6).** Per **Amendment #9**: verify the **shared
+  Supabase project's** JWT (public JWKS, no `service_role`), MobSkills-owned
+  roles/departments keyed by the shared user UUID, role/department admin UI, access
+  filtering. *Done when:* a user signs in with their existing Moburst account and a
+  `department`-scoped skill is hidden from outsiders, visible to admins.
 - **Phase 4 — Analytics (req. #5).** Wire `events` to the real signed-in `user_id`;
   build the dashboard (downloads/views over time, top skills, by department/user/
   target). *Done when:* a download by a known user appears in the by-department chart.
