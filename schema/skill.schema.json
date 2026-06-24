@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/Mobi-Moburst/Skills-Repository-/schema/skill.schema.json",
+  "$id": "https://github.com/Mobi-Moburst/MobSkills/schema/skill.schema.json",
   "title": "Moburst Skill frontmatter",
   "description": "Schema for the YAML frontmatter of every skills/<slug>/SKILL.md file.",
   "type": "object",
@@ -21,7 +21,7 @@
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
-      "items": { "enum": ["claude", "codex", "chatgpt"] },
+      "items": { "enum": ["claude", "codex"] },
       "description": "Which agent platforms this skill supports."
     },
     "version": {

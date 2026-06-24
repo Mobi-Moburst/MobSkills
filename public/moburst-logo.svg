@@ -1,0 +1,15 @@
+<svg viewBox="0 0 200 80" xmlns="http://www.w3.org/2000/svg">
+  <!-- Colorful flag/arrow icon -->
+  <g transform="translate(130, 5)">
+    <!-- Blue triangle -->
+    <polygon points="0,35 30,15 30,35" fill="#29ABE2"/>
+    <!-- Green triangle -->
+    <polygon points="0,35 30,15 15,0" fill="#8CC63F"/>
+    <!-- Yellow triangle -->
+    <polygon points="15,0 30,15 40,5" fill="#FBB03B"/>
+    <!-- Red triangle -->
+    <polygon points="30,15 30,35 45,20" fill="#ED1C24"/>
+  </g>
+  <!-- "moburst" text -->
+  <text x="10" y="62" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="36" font-weight="300" fill="#FAFAFA" letter-spacing="1">moburst</text>
+</svg>
