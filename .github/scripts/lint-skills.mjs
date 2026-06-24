@@ -4,9 +4,10 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { glob } from "glob";
-import Ajv from "ajv";
+import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
+const Ajv = Ajv2020.default ?? Ajv2020; // draft 2020-12 build; handle ESM default interop
 const schema = JSON.parse(readFileSync("schema/skill.schema.json", "utf8"));
 const ajv = new Ajv({ allErrors: true, strict: false });
 addFormats(ajv);
