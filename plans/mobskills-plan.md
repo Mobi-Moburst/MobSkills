@@ -1,5 +1,31 @@
 # MobSkills — Skills Repository & Management Portal (Detailed Plan)
 
+> ## ⚠️ Amendments (supersede anything below; updated 2026-06-24 after dual-engine review)
+> When these conflict with text further down, **these win**.
+>
+> 1. **DB = Supabase**, not Neon (Moburst paid account; MobPulse uses it). A separate
+>    Supabase project — **not yet created → Phase 2 is blocked on it.**
+> 2. **Phase 3 auth = Supabase Auth + Row-Level Security**, not Auth.js. Supabase
+>    collapses DB + auth + per-department authz into one: Google SSO restricted to
+>    `@moburst.com`; RLS policies enforce `public/internal/department` visibility in the
+>    database, not hand-written `lib/access.ts` filters in every query. Keep `lib/access.ts`
+>    only as a thin helper over RLS-scoped queries. Drizzle optional (may use Supabase SQL).
+> 3. **Targets = Claude + Codex only.** ChatGPT dropped (schema + types already updated).
+> 4. **Localhost-only for now; Vercel deferred.** The GitHub **push webhook can't reach
+>    the app** → Phase 2 live-sync default is the **manual Resync button + cron**; the
+>    webhook lands later with a public URL / dev tunnel.
+> 5. **Phase 1→2 is not a drop-in swap.** Catalog/detail are currently `force-static` +
+>    synchronous (`lib/skills.ts` filesystem reader). A Supabase/GitHub-backed layer is
+>    async + dynamic → flip those pages off `force-static`/`dynamicParams=false`, and
+>    **never statically generate department-scoped skills** (would leak them).
+> 6. **`status` is NOT yet validated** by `lib/frontmatter.ts` (schema has
+>    `additionalProperties:true`). Validate explicitly there if we want it enforced.
+> 7. **Versioning — simpler first step:** store current `version` + git SHA in the DB;
+>    add per-skill `<slug>@<semver>` tags + history only when the Phase-5 version UI needs
+>    pinned historical downloads.
+> 8. **GitHub write credential:** classic PAT (`repo`+`workflow`). Fine-grained PATs 403
+>    on this personal-account collaborator repo — do NOT plan on them for prod.
+
 ## Context
 
 Moburst is centralizing its agent **Skills** in `github.com/Mobi-Moburst/MobSkills`

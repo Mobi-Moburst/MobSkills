@@ -10,10 +10,12 @@ export function SkillsBrowser({
   skills,
   targets,
   tags,
+  newSkillHref,
 }: {
   skills: SkillSummary[];
   targets: Target[];
   tags: string[];
+  newSkillHref: string;
 }) {
   const [query, setQuery] = useState("");
   const [activeTarget, setActiveTarget] = useState<Target | null>(null);
@@ -33,7 +35,7 @@ export function SkillsBrowser({
     <div className="space-y-6">
       <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
         {/* Target segmented control */}
-        <div className="flex items-center gap-1 rounded-xl border border-card-border bg-card/60 p-1">
+        <div className="flex items-center gap-1 rounded-xl border border-card-border bg-card/40 backdrop-blur-xl p-1">
           <button
             type="button"
             onClick={() => setActiveTarget(null)}
@@ -72,7 +74,7 @@ export function SkillsBrowser({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search skills…"
-            className="w-full rounded-xl border border-card-border bg-card/60 py-2 pl-10 pr-4 text-sm text-text-primary placeholder:text-text-muted/60 transition-colors focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/20"
+            className="w-full rounded-xl border border-card-border bg-card/40 backdrop-blur-xl py-2 pl-10 pr-4 text-sm text-text-primary placeholder:text-text-muted/60 transition-colors focus:border-accent/40 focus:outline-none focus:ring-1 focus:ring-accent/20"
           />
         </div>
       </div>
@@ -86,7 +88,7 @@ export function SkillsBrowser({
               className={`rounded-full px-2.5 py-0.5 text-xs transition-colors ${
                 activeTag === tag
                   ? "bg-accent/20 text-accent ring-1 ring-inset ring-accent/30"
-                  : "bg-card/60 text-text-muted ring-1 ring-inset ring-card-border hover:text-text-secondary"
+                  : "bg-card/40 backdrop-blur-xl text-text-muted ring-1 ring-inset ring-card-border hover:text-text-secondary"
               }`}
             >
               #{tag}
@@ -108,6 +110,21 @@ export function SkillsBrowser({
           {filtered.map((s, i) => (
             <SkillCard key={s.slug} skill={s} index={i} />
           ))}
+          {/* Ghost tile — keeps the grid intentional and guides adding skills */}
+          <a
+            href={newSkillHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex min-h-[180px] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-card-border text-text-muted transition-colors hover:border-accent/40 hover:text-text-secondary"
+          >
+            <span className="flex h-10 w-10 items-center justify-center rounded-full border border-card-border transition-colors group-hover:border-accent/40">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </span>
+            <span className="text-sm font-medium">Add a skill</span>
+            <span className="text-xs text-text-muted/60">opens a PR on GitHub</span>
+          </a>
         </div>
       )}
     </div>

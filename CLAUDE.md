@@ -43,8 +43,12 @@ There are no tests yet. Treat a clean `npm run build` as the pre-commit bar.
   filter UI is data-driven from `getFacets()`, so it auto-reflects targets in use.
 - **Design = MobPulse dark theme.** Use the `@theme` tokens in `app/globals.css`:
   `bg-card`, `border-card-border`, `text-text-primary/secondary/muted`, gold `accent`.
-  Headings use `font-heading` (Outfit); body is DM Sans. Cards: `rounded-2xl border
-  border-card-border bg-card/80 backdrop-blur-xl` + hover lift + `animate-fade-in-up`.
+  Headings use `font-heading` (Outfit); body is DM Sans. Surfaces are **frosted glass
+  over a cosmic background** (`components/cosmic-background.tsx`): cards, KPI tiles,
+  sidebar, search, and pickers all use `bg-card/40 backdrop-blur-xl` (cards hover to
+  `/60`) + `rounded-2xl border border-card-border` + hover lift + `animate-fade-in-up`.
+  For per-element accent tints, use `color-mix(in srgb, var(--token) N%, transparent)` —
+  never hardcode off-palette hex.
 - Server Components by default; `"use client"` only where there's interactivity
   (`skills-browser.tsx`, `consume-actions.tsx`). `lib/skills.ts` + `lib/frontmatter.ts`
   are `server-only`.

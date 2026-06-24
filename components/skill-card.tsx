@@ -8,7 +8,7 @@ export function SkillCard({ skill, index }: { skill: SkillSummary; index: number
   return (
     <Link
       href={`/skills/${skill.slug}`}
-      className="animate-fade-in-up group relative flex flex-col rounded-2xl border border-card-border bg-card/80 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/40 hover:shadow-xl hover:shadow-accent/5"
+      className="animate-fade-in-up group relative flex flex-col rounded-2xl border border-card-border bg-card/40 p-6 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/40 hover:bg-card/60 hover:shadow-xl hover:shadow-accent/5"
       style={{ animationDelay: `${index * 70}ms`, animationFillMode: "both" }}
     >
       <div className="flex items-start gap-3">
