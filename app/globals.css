@@ -15,6 +15,7 @@
   --color-surface: #131315;
   --color-claude: #d97706;
   --color-codex: #10a37f;
+  --color-info: #4a9ef5;
   --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.5);
   --radius-card: 1rem;
   --font-heading: var(--font-outfit);
