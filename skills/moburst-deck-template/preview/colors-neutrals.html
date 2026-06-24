@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Colors · Neutrals</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; }
+  body {
+    width: 700px; height: 200px; background: #0a0a0a;
+    padding: 28px 32px; box-sizing: border-box;
+    color: #fff; font-family: var(--mb-font-sans);
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .sw {
+    height: 96px; border-radius: 12px; padding: 10px 12px;
+    box-sizing: border-box; display: flex; flex-direction: column; justify-content: flex-end;
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #fff; font-size: 11px;
+  }
+  .sw .label { font-weight: 600; font-size: 12px; }
+  .sw .hex { opacity: 0.65; font-family: ui-monospace, Menlo, monospace; font-size: 10px; }
+  .fg1 { background: #FFFFFF; color: #0a0a0a; }
+  .fg1 .hex { opacity: 0.55; }
+  .fg2 { background: #E5E7EB; color: #0a0a0a; }
+  .fg2 .hex { opacity: 0.55; }
+  .fg3 { background: #9CA3AF; color: #0a0a0a; }
+  .fg3 .hex { opacity: 0.6; }
+  .fg4 { background: #6B7280; }
+  .fg5 { background: #3F4651; }
+  .meta { font-size: 11px; color: var(--mb-fg-3); letter-spacing: 0.16em; text-transform: uppercase; }
+</style>
+</head>
+<body class="mb-root">
+  <div class="meta">Neutrals — text & rules on dark canvas</div>
+  <div class="row">
+    <div class="sw fg1"><span class="label">fg-1</span><span class="hex">#FFFFFF</span></div>
+    <div class="sw fg2"><span class="label">fg-2</span><span class="hex">#E5E7EB</span></div>
+    <div class="sw fg3"><span class="label">fg-3</span><span class="hex">#9CA3AF</span></div>
+    <div class="sw fg4"><span class="label">fg-4</span><span class="hex">#6B7280</span></div>
+    <div class="sw fg5"><span class="label">fg-5</span><span class="hex">#3F4651</span></div>
+  </div>
+</body>
+</html>

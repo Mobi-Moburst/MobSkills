@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Components · Service stack</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; }
+  body {
+    width: 700px; height: 260px; background: #050505;
+    padding: 28px 32px; box-sizing: border-box;
+    font-family: var(--mb-font-sans); color: #fff;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .eyebrow { font-size: 11px; color: var(--mb-fg-3); letter-spacing: 0.18em; text-transform: uppercase; }
+  .row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .col { display: flex; flex-direction: column; gap: 8px; padding-right: 4px; }
+  .col + .col { border-left: 1px solid rgba(255,255,255,0.06); padding-left: 8px; }
+  .num { font-size: 22px; font-weight: 700; letter-spacing: -0.04em; color: #fff; line-height: 1; }
+  .head { font-size: 12.5px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.15; color: #fff; }
+  .lst { font-size: 11px; color: var(--mb-fg-3); line-height: 1.5; }
+</style>
+</head>
+<body class="mb-root">
+  <div class="eyebrow">Service stack — 25+ services, one stack</div>
+  <div class="row">
+    <div class="col">
+      <span class="num">01</span>
+      <span class="head">Marketing</span>
+      <div class="lst">Strategy<br>Mobile<br>Digital<br>Social<br>BI &amp; Analytics</div>
+    </div>
+    <div class="col">
+      <span class="num">02</span>
+      <span class="head">Organic</span>
+      <div class="lst">SEO &amp; AEO<br>ASO<br>CRO<br>PR<br>Content</div>
+    </div>
+    <div class="col">
+      <span class="num">03</span>
+      <span class="head">Creative</span>
+      <div class="lst">Concept<br>Video<br>Social Mgmt<br>App Store<br>UGC</div>
+    </div>
+    <div class="col">
+      <span class="num">04</span>
+      <span class="head">Media Buying</span>
+      <div class="lst">Social &amp; Search<br>Networks &amp; RTBs<br>Influencer<br>Email<br>OTT</div>
+    </div>
+    <div class="col">
+      <span class="num">05</span>
+      <span class="head">Product &amp; Dev</span>
+      <div class="lst">Consulting<br>UI / UX<br>Web Dev<br>App Dev<br>AI</div>
+    </div>
+  </div>
+</body>
+</html>

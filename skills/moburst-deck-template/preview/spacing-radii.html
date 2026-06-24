@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Spacing · Radii</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; }
+  body {
+    width: 700px; height: 220px; background: #050505;
+    padding: 28px 32px; box-sizing: border-box;
+    font-family: var(--mb-font-sans); color: #fff;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .eyebrow { font-size: 11px; color: var(--mb-fg-3); letter-spacing: 0.18em; text-transform: uppercase; }
+  .row { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; }
+  .box {
+    aspect-ratio: 1; background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(185,224,69,0.5);
+    box-shadow: 0 0 12px rgba(185,224,69,0.15);
+    display: flex; align-items: flex-end; padding: 8px;
+    font-family: ui-monospace, Menlo, monospace; font-size: 10.5px;
+    color: var(--mb-fg-3);
+  }
+</style>
+</head>
+<body class="mb-root">
+  <div class="eyebrow">Corner radii</div>
+  <div class="row">
+    <div class="box" style="border-radius:6px">6 · xs</div>
+    <div class="box" style="border-radius:10px">10 · sm</div>
+    <div class="box" style="border-radius:14px">14 · md</div>
+    <div class="box" style="border-radius:20px">20 · lg</div>
+    <div class="box" style="border-radius:28px">28 · xl</div>
+    <div class="box" style="border-radius:999px">999 · pill</div>
+  </div>
+</body>
+</html>
