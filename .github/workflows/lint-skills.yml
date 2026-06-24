@@ -1,0 +1,26 @@
+name: lint-skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    paths:
+      - "skills/**"
+      - "schema/**"
+      - ".github/workflows/lint-skills.yml"
+
+jobs:
+  lint-skills:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install validators
+        run: npm install --no-save gray-matter ajv ajv-formats glob
+
+      - name: Validate every SKILL.md against schema/skill.schema.json
+        run: node .github/scripts/lint-skills.mjs

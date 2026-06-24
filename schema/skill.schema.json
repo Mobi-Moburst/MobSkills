@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Mobi-Moburst/Skills-Repository-/schema/skill.schema.json",
+  "title": "Moburst Skill frontmatter",
+  "description": "Schema for the YAML frontmatter of every skills/<slug>/SKILL.md file.",
+  "type": "object",
+  "required": ["name", "description", "targets"],
+  "additionalProperties": true,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "description": "kebab-case identifier; must match the skill folder name."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 20,
+      "description": "Trigger-oriented summary ('Use when ...'). This is how agents select the skill."
+    },
+    "targets": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["claude", "codex", "chatgpt"] },
+      "description": "Which agent platforms this skill supports."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semantic version (optional; defaults from the latest git tag)."
+    },
+    "visibility": {
+      "enum": ["public", "internal", "department"],
+      "default": "internal"
+    },
+    "departments": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Required only when visibility = department."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "owner": {
+      "type": "string",
+      "format": "email"
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "visibility": { "const": "department" } } },
+      "then": { "required": ["departments"] }
+    }
+  ]
+}
