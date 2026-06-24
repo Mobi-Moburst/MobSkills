@@ -1,11 +1,8 @@
 import JSZip from "jszip";
-import { getSkill, readSkillFiles } from "@/lib/skills";
+import { getSkill, readSkillFiles, MAX_DOWNLOAD_BYTES } from "@/lib/skills";
 
 // Runs as a Node function (reads files + builds the zip on request).
 export const runtime = "nodejs";
-
-// Keep the in-memory zip well under Vercel's 4.5 MB response limit.
-const MAX_BYTES = 4 * 1024 * 1024;
 
 export async function GET(
   _req: Request,
@@ -19,7 +16,7 @@ export async function GET(
 
   const files = readSkillFiles(slug);
   const total = files.reduce((n, f) => n + f.content.byteLength, 0);
-  if (total > MAX_BYTES) {
+  if (total > MAX_DOWNLOAD_BYTES) {
     return new Response("Skill too large to zip inline", { status: 413 });
   }
 
