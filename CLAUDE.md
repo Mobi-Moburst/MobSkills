@@ -1,7 +1,8 @@
 # CLAUDE.md
 
-Guidance for working in this repo. Keep it short and high-signal — add a line only
-when something is non-obvious or has bitten us.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+Keep it short and high-signal — add a line only when something is non-obvious or has bitten us.
 
 ## What this is
 
@@ -26,6 +27,13 @@ npx tsc --noEmit     # typecheck only
 There are no tests yet. Treat a clean `npm run build` as the pre-commit bar.
 
 ## Architecture
+
+**Big picture / data flow (Phase 1):** GitHub repo *is* the app — `skills/` content and
+the Next.js app live together. A request hits an RSC page → `lib/skills.ts` reads
+`skills/*/SKILL.md` from the local filesystem → `lib/frontmatter.ts` validates each
+against `schema/skill.schema.json` (invalid skills dropped, not indexed) → the catalog
+renders. Download = `app/api/skills/[slug]/download` zips just that skill's folder
+in-memory. No database yet — that's Phase 2 (Supabase + GitHub API for live sync).
 
 - **Skill content**: `skills/<slug>/SKILL.md` (YAML frontmatter + Markdown body),
   optional `references/`, `scripts/`. One folder per skill; `name` must equal the folder.
@@ -71,5 +79,7 @@ There are no tests yet. Treat a clean `npm run build` as the pre-commit bar.
 
 ## Plan & history
 
-Approved phased plan: `~/.claude/plans/we-are-going-to-woolly-yao.md` (Phase 0–1 done;
-Phase 2 = Supabase + GitHub sync; 3 = auth/RBAC; 4 = analytics; 5 = editor/versioning UI).
+Approved phased plan lives in-repo at **`plans/mobskills-plan.md`** (read its top
+"Amendments" block first — it supersedes stale text). Phase 0–1 done (read-only portal,
+on `main`); Phase 2 = Supabase + GitHub sync; 3 = auth/RBAC (Supabase Auth + RLS);
+4 = analytics; 5 = editor/versioning UI. Phase 2+ is blocked on creating the Supabase project.
