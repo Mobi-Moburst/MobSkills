@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Type · Scale</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; }
+  body {
+    width: 700px; height: 340px; background: #050505;
+    padding: 28px 36px; box-sizing: border-box;
+    font-family: var(--mb-font-sans); color: #fff;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .row { display: grid; grid-template-columns: 88px 1fr 92px; align-items: baseline; gap: 18px; }
+  .lbl { font-size: 10.5px; color: var(--mb-fg-4); letter-spacing: 0.16em; text-transform: uppercase; }
+  .px  { font-size: 10.5px; color: var(--mb-fg-4); font-family: ui-monospace, Menlo, monospace; text-align: right; }
+  .smp { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: -0.02em; }
+  .h1  { font-weight: 700; font-size: 36px; line-height: 1; letter-spacing: -0.035em; }
+  .h2  { font-weight: 700; font-size: 28px; line-height: 1; letter-spacing: -0.03em; }
+  .h3  { font-weight: 700; font-size: 22px; line-height: 1.1; letter-spacing: -0.02em; }
+  .h4  { font-weight: 700; font-size: 18px; line-height: 1.2; }
+  .bd  { font-weight: 400; font-size: 15px; line-height: 1.4; color: var(--mb-fg-2); }
+  .ey  { font-weight: 500; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #B9E045; }
+</style>
+</head>
+<body class="mb-root">
+  <div class="row"><span class="lbl">Hero</span><span class="smp h1">Inflection.</span><span class="px">96 / 700</span></div>
+  <div class="row"><span class="lbl">H1</span>   <span class="smp h1">13 years of evolution.</span><span class="px">72 / 700</span></div>
+  <div class="row"><span class="lbl">H2</span>   <span class="smp h2">The horizon to $500M</span><span class="px">56 / 700</span></div>
+  <div class="row"><span class="lbl">H3</span>   <span class="smp h3">Future‑proofing the revenue mix.</span><span class="px">40 / 700</span></div>
+  <div class="row"><span class="lbl">H4</span>   <span class="smp h4">M&amp;A Value Arbitrage</span><span class="px">28 / 700</span></div>
+  <div class="row"><span class="lbl">Body</span> <span class="smp bd">Linear agency labor becomes exponential software delivery.</span><span class="px">20 / 400</span></div>
+  <div class="row"><span class="lbl">Eyebrow</span><span class="smp ey">Private · Confidential · 2026</span><span class="px">12 / 500</span></div>
+</body>
+</html>

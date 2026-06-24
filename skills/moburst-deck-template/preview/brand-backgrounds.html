@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Brand · Backgrounds</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; }
+  body {
+    width: 700px; height: 200px;
+    padding: 14px; box-sizing: border-box;
+    background: #050505;
+    font-family: var(--mb-font-sans); color: #fff;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;
+  }
+  .b {
+    border-radius: 14px; overflow: hidden;
+    position: relative; display: flex;
+    align-items: flex-end; padding: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--mb-fg-3);
+  }
+  .aurora {
+    background:
+      radial-gradient(40% 60% at 12% 88%, rgba(185,224,69,0.22) 0%, transparent 60%),
+      radial-gradient(40% 60% at 92% 8%,  rgba(16,185,129,0.14) 0%, transparent 60%),
+      radial-gradient(20% 40% at 50% 55%, rgba(60,40,120,0.18) 0%, transparent 70%),
+      #050505;
+  }
+  .stars { background: #000 url("../assets/bg-starfield.png") center/cover no-repeat; }
+  .grid  {
+    background-color: #050505;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+</style>
+</head>
+<body class="mb-root">
+  <div class="b aurora">Aurora void</div>
+  <div class="b stars">Starfield</div>
+  <div class="b grid">Grid</div>
+</body>
+</html>

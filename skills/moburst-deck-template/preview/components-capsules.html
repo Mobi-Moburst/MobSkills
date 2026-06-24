@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Components · Capsules</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; }
+  body {
+    width: 700px; height: 220px; background: #050505;
+    padding: 28px 32px; box-sizing: border-box;
+    font-family: var(--mb-font-sans); color: #fff;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .eyebrow { font-size: 11px; color: var(--mb-fg-3); letter-spacing: 0.18em; text-transform: uppercase; }
+  .row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .pill {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 18px; border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+  }
+  .pill--outline {
+    color: #fff;
+    border: 1px solid rgba(185,224,69,0.55);
+    background: rgba(185,224,69,0.04);
+    box-shadow: 0 0 18px rgba(185,224,69,0.12);
+  }
+  .pill--solid {
+    background: #B9E045; color: #0A0A0A; border: 1px solid #B9E045;
+    box-shadow: 0 0 24px rgba(185,224,69,0.4);
+  }
+  .pill--ghost {
+    background: transparent; color: var(--mb-fg-3);
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .dot { width: 6px; height: 6px; border-radius: 999px; background: currentColor; }
+</style>
+</head>
+<body class="mb-root">
+  <div class="eyebrow">Capsules — value hubs &amp; tags</div>
+  <div class="row">
+    <span class="pill pill--outline"><span class="dot"></span>Value Hub 1</span>
+    <span class="pill pill--outline">Value Hub 2</span>
+    <span class="pill pill--outline">Value Hub 3</span>
+    <span class="pill pill--solid">$500M Valuation</span>
+  </div>
+  <div class="row">
+    <span class="pill pill--ghost">Strategy</span>
+    <span class="pill pill--ghost">Organic</span>
+    <span class="pill pill--ghost">Creative</span>
+    <span class="pill pill--ghost">Media</span>
+    <span class="pill pill--ghost">Product &amp; Dev</span>
+  </div>
+</body>
+</html>

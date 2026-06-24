@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Components · KPI tile</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; }
+  body {
+    width: 700px; height: 240px; background: #050505;
+    padding: 24px 32px; box-sizing: border-box;
+    font-family: var(--mb-font-sans); color: #fff;
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  }
+  .tile {
+    border-radius: 20px; padding: 18px;
+    background: rgba(10,10,10,0.6);
+    border: 1px solid rgba(185,224,69,0.55);
+    box-shadow: 0 0 18px rgba(185,224,69,0.10);
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .cap { font-size: 10.5px; color: var(--mb-fg-3); letter-spacing: 0.16em; text-transform: uppercase; }
+  .pct { font-size: 56px; font-weight: 700; line-height: 0.95; letter-spacing: -0.04em; color: #fff; }
+  .pct em { font-style: normal; color: #B9E045; }
+  .lbl { font-size: 12.5px; color: var(--mb-fg-2); line-height: 1.4; }
+  .lbl b { color: #fff; font-weight: 600; display: block; margin-bottom: 2px; }
+</style>
+</head>
+<body class="mb-root">
+  <div class="tile">
+    <span class="cap">Revenue mix · 2026</span>
+    <span class="pct">65<em>%</em></span>
+    <p class="lbl"><b>Core Digital Services</b>High‑stability recurring contracts.</p>
+  </div>
+  <div class="tile">
+    <span class="cap">Revenue mix · 2026</span>
+    <span class="pct">20<em>%</em></span>
+    <p class="lbl"><b>AI‑Enabled Services</b>Higher‑margin delivery via gOS.</p>
+  </div>
+  <div class="tile">
+    <span class="cap">Revenue mix · 2026</span>
+    <span class="pct">15<em>%</em></span>
+    <p class="lbl"><b>Tech Product Revenue</b>90%+ gross margin IP.</p>
+  </div>
+</body>
+</html>

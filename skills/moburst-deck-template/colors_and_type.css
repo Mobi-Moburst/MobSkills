@@ -1,0 +1,331 @@
+/* ============================================================
+   MOBURST DESIGN SYSTEM — colors & type
+   Source of truth for the Investor / gOS brand surface.
+   ============================================================ */
+
+/* ---------- Fonts ---------- */
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/Inter-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/Inter-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/Inter-Italic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Inter Light";
+  src: url("fonts/InterLight-Regular.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* -------- Core palette -------- */
+  --mb-ink:           #000000;   /* deep void background */
+  --mb-ink-2:         #0A0A0A;   /* near-black surface  */
+  --mb-ink-3:         #141414;   /* slightly raised      */
+  --mb-paper:         #FFFFFF;
+  --mb-paper-dim:     #F5F5F5;
+
+  /* Signature accent — the "gOS lime". Used for outlines,
+     keylines, key numbers, glowing rings, callouts.        */
+  --mb-lime:          #B9E045;
+  --mb-lime-bright:   #BEE545;
+  --mb-lime-soft:     #D9EE8A;
+  --mb-lime-deep:     #6B8520;
+
+  /* Logo / prism accents (used sparingly, mostly in the M mark
+     and the rare data callout). */
+  --mb-cyan:          #2DE4FF;
+  --mb-cyan-2:        #3BDCFF;
+  --mb-yellow:        #FFE334;
+  --mb-pink:          #FF6671;
+  --mb-emerald:       #10B981;
+
+  /* Neutrals — for body copy, axis labels, eyebrow text. */
+  --mb-fg-1:          #FFFFFF;   /* primary on dark    */
+  --mb-fg-2:          #E5E7EB;   /* secondary on dark  */
+  --mb-fg-3:          #9CA3AF;   /* tertiary, captions */
+  --mb-fg-4:          #6B7280;   /* legal, footer      */
+  --mb-fg-5:          #3F4651;   /* hairline / rule    */
+
+  /* Inverted (rare — light surfaces) */
+  --mb-fg-on-light-1: #0A0A0A;
+  --mb-fg-on-light-2: #4B5563;
+
+  /* -------- Surfaces -------- */
+  --mb-surface:           #000000;
+  --mb-surface-card:      rgba(255,255,255,0.025);
+  --mb-surface-card-hov:  rgba(255,255,255,0.05);
+  --mb-surface-glass:     rgba(20,20,20,0.55);
+  --mb-stroke:            rgba(255,255,255,0.10);
+  --mb-stroke-strong:     rgba(255,255,255,0.20);
+  --mb-stroke-lime:       rgba(185,224,69,0.55);
+  --mb-stroke-lime-hi:    rgba(185,224,69,0.90);
+
+  /* -------- Glow / shadow system -------- */
+  --mb-glow-lime:    0 0 0 1px rgba(185,224,69,0.6),
+                     0 0 24px rgba(185,224,69,0.25),
+                     0 0 64px rgba(185,224,69,0.12);
+  --mb-glow-lime-soft: 0 0 0 1px rgba(185,224,69,0.35),
+                       0 0 18px rgba(185,224,69,0.12);
+  --mb-glow-cyan:    0 0 36px rgba(45,228,255,0.25);
+  --mb-shadow-card:  0 1px 0 rgba(255,255,255,0.04) inset,
+                     0 24px 60px -20px rgba(0,0,0,0.6);
+
+  /* -------- Radii -------- */
+  --mb-r-xs:  6px;
+  --mb-r-sm:  10px;
+  --mb-r-md:  14px;
+  --mb-r-lg:  20px;
+  --mb-r-xl:  28px;
+  --mb-r-pill: 999px;
+
+  /* -------- Spacing scale (4pt) -------- */
+  --mb-space-1: 4px;
+  --mb-space-2: 8px;
+  --mb-space-3: 12px;
+  --mb-space-4: 16px;
+  --mb-space-5: 24px;
+  --mb-space-6: 32px;
+  --mb-space-7: 48px;
+  --mb-space-8: 64px;
+  --mb-space-9: 96px;
+  --mb-space-10: 128px;
+
+  /* -------- Type families -------- */
+  --mb-font-sans:    "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mb-font-display: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --mb-font-light:   "Inter Light", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --mb-font-mono:    ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* -------- Type scale (slide / hero context — 1920×1080) -------- */
+  --mb-fs-hero:   96px;   /* "The AI-Native Growth Operating System." */
+  --mb-fs-h1:     72px;   /* slide titles                              */
+  --mb-fs-h2:     56px;
+  --mb-fs-h3:     40px;
+  --mb-fs-h4:     28px;
+  --mb-fs-body:   20px;
+  --mb-fs-small:  16px;
+  --mb-fs-eyebrow:12px;   /* uppercase, tracked                        */
+  --mb-fs-footer: 11px;
+
+  /* -------- Weight / tracking -------- */
+  --mb-w-light:    300;
+  --mb-w-regular:  400;
+  --mb-w-medium:   500;
+  --mb-w-bold:     700;
+  --mb-track-tight:  -0.02em;
+  --mb-track-display:-0.035em;
+  --mb-track-eyebrow: 0.18em;
+
+  /* -------- Motion -------- */
+  --mb-ease-out:     cubic-bezier(0.16, 1, 0.3, 1);
+  --mb-ease-in-out:  cubic-bezier(0.83, 0, 0.17, 1);
+  --mb-dur-fast:     160ms;
+  --mb-dur-base:     260ms;
+  --mb-dur-slow:     520ms;
+}
+
+/* ============================================================
+   SEMANTIC TYPE — apply these classes directly.
+   The display set is intentionally tight, low, and big.
+   ============================================================ */
+.mb-hero,
+.mb-h1,
+.mb-h2,
+.mb-h3,
+.mb-display { font-family: var(--mb-font-display); }
+
+.mb-hero {
+  font-family: var(--mb-font-display);
+  font-weight: var(--mb-w-bold);
+  font-size: var(--mb-fs-hero);
+  line-height: 0.96;
+  letter-spacing: var(--mb-track-display);
+  color: var(--mb-fg-1);
+  text-wrap: balance;
+}
+.mb-hero .accent { color: var(--mb-lime); font-weight: var(--mb-w-bold); }
+.mb-hero em      { font-style: normal; color: var(--mb-lime); }
+
+.mb-h1 {
+  font-weight: var(--mb-w-bold);
+  font-size: var(--mb-fs-h1);
+  line-height: 1.02;
+  letter-spacing: var(--mb-track-display);
+  color: var(--mb-fg-1);
+  text-wrap: balance;
+}
+.mb-h1 .accent, .mb-h1 em { color: var(--mb-lime); font-style: normal; }
+
+.mb-h2 {
+  font-weight: var(--mb-w-bold);
+  font-size: var(--mb-fs-h2);
+  line-height: 1.05;
+  letter-spacing: var(--mb-track-tight);
+  color: var(--mb-fg-1);
+}
+.mb-h3 {
+  font-weight: var(--mb-w-bold);
+  font-size: var(--mb-fs-h3);
+  line-height: 1.1;
+  letter-spacing: var(--mb-track-tight);
+  color: var(--mb-fg-1);
+}
+.mb-h4 {
+  font-weight: var(--mb-w-bold);
+  font-size: var(--mb-fs-h4);
+  line-height: 1.2;
+  color: var(--mb-fg-1);
+}
+
+.mb-body {
+  font-family: var(--mb-font-sans);
+  font-weight: var(--mb-w-regular);
+  font-size: var(--mb-fs-body);
+  line-height: 1.45;
+  color: var(--mb-fg-2);
+}
+.mb-body-light {
+  font-family: var(--mb-font-light);
+  font-weight: var(--mb-w-light);
+  font-size: var(--mb-fs-body);
+  line-height: 1.5;
+  color: var(--mb-fg-3);
+}
+.mb-small {
+  font-size: var(--mb-fs-small);
+  line-height: 1.5;
+  color: var(--mb-fg-3);
+}
+
+.mb-eyebrow {
+  font-family: var(--mb-font-sans);
+  font-weight: var(--mb-w-medium);
+  font-size: var(--mb-fs-eyebrow);
+  letter-spacing: var(--mb-track-eyebrow);
+  text-transform: uppercase;
+  color: var(--mb-lime);
+}
+.mb-footer-stamp {
+  font-size: var(--mb-fs-footer);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--mb-fg-4);
+}
+
+/* Numeric / data — used for big % and $ callouts */
+.mb-num-xl {
+  font-family: var(--mb-font-display);
+  font-weight: var(--mb-w-bold);
+  font-size: 128px;
+  line-height: 0.9;
+  letter-spacing: var(--mb-track-display);
+  color: var(--mb-lime);
+}
+.mb-num-lg {
+  font-family: var(--mb-font-display);
+  font-weight: var(--mb-w-bold);
+  font-size: 88px;
+  line-height: 0.95;
+  letter-spacing: var(--mb-track-display);
+  color: var(--mb-fg-1);
+}
+
+/* ============================================================
+   GLOBAL BASE
+   ============================================================ */
+.mb-root {
+  font-family: var(--mb-font-sans);
+  color: var(--mb-fg-1);
+  background: var(--mb-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-feature-settings: "ss01" on, "cv11" on;
+}
+
+/* ============================================================
+   BACKGROUNDS — the brand has a few recurring sky/scene treatments
+   ============================================================ */
+.mb-bg-void {
+  background: radial-gradient(120% 90% at 50% 60%,
+              #161616 0%, #050505 55%, #000 100%);
+}
+.mb-bg-aurora {
+  /* The deck's signature: deep void with a faint olive bloom
+     bottom-left and a faint teal bloom top-right.            */
+  background:
+    radial-gradient(40% 60% at 12% 88%, rgba(185,224,69,0.18) 0%, transparent 60%),
+    radial-gradient(40% 60% at 92% 8%,  rgba(16,185,129,0.10) 0%, transparent 60%),
+    radial-gradient(20% 40% at 50% 55%, rgba(60,40,120,0.15) 0%, transparent 70%),
+    #050505;
+}
+.mb-bg-starfield {
+  background: #000 url("assets/bg-starfield.png") center/cover no-repeat;
+}
+.mb-bg-grid {
+  background-color: #050505;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* ============================================================
+   UTILITY — capsule (the "value hub" rounded chip from slide 7)
+   ============================================================ */
+.mb-capsule {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mb-space-2);
+  padding: 10px 18px;
+  border: 1px solid var(--mb-stroke-lime);
+  border-radius: var(--mb-r-pill);
+  color: var(--mb-fg-1);
+  background: rgba(185,224,69,0.04);
+  box-shadow: var(--mb-glow-lime-soft);
+  font-size: var(--mb-fs-small);
+  font-weight: var(--mb-w-medium);
+}
+.mb-capsule--solid {
+  background: var(--mb-lime);
+  color: #0A0A0A;
+  border-color: var(--mb-lime);
+  box-shadow: 0 0 24px rgba(185,224,69,0.45);
+}
+
+/* The signature glowing rounded-rect "card" used across the deck */
+.mb-card-glow {
+  position: relative;
+  border-radius: var(--mb-r-lg);
+  border: 1px solid var(--mb-stroke-lime);
+  background: rgba(10,10,10,0.6);
+  box-shadow: var(--mb-glow-lime-soft);
+  padding: 24px;
+  color: var(--mb-fg-1);
+}
+.mb-card-glow--strong {
+  border-color: var(--mb-stroke-lime-hi);
+  box-shadow: var(--mb-glow-lime);
+}
+.mb-card-quiet {
+  border-radius: var(--mb-r-lg);
+  border: 1px solid var(--mb-stroke);
+  background: var(--mb-surface-card);
+  padding: 24px;
+}

@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Moburst · Investor Memorandum 2026 — Slide templates</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="deck-stage.js"></script>
+<style>
+  html, body { margin: 0; background: #000; }
+  deck-stage { --slide-w: 1920px; --slide-h: 1080px; }
+
+  /* ---- Shared slide chrome ---- */
+  section.slide {
+    position: relative;
+    width: 1920px; height: 1080px;
+    color: #fff;
+    font-family: var(--mb-font-sans);
+    overflow: hidden;
+  }
+  section.slide h1, section.slide h2, section.slide h3,
+  section.slide blockquote, section.slide p { margin: 0; }
+
+  /* Default aurora background */
+  section.slide.bg-aurora {
+    background:
+      radial-gradient(40% 60% at 12% 88%, rgba(185,224,69,0.16) 0%, transparent 60%),
+      radial-gradient(40% 60% at 92% 8%,  rgba(16,185,129,0.10) 0%, transparent 60%),
+      radial-gradient(20% 40% at 50% 55%, rgba(60,40,120,0.14) 0%, transparent 70%),
+      #050505;
+  }
+  section.slide.bg-starfield {
+    background: #000 url("../assets/bg-starfield.png") center/cover no-repeat;
+  }
+  section.slide.bg-grid {
+    background-color: #050505;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 96px 96px;
+  }
+  section.slide.bg-void { background: #050505; }
+
+  /* Footer stamp on every slide */
+  .footer {
+    position: absolute;
+    bottom: 36px; left: 96px; right: 96px;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: #6B7280; white-space: nowrap;
+  }
+  .footer .lockup { display: flex; align-items: center; gap: 12px; }
+  .footer .lockup img { height: 22px; }
+  .footer .lockup span { white-space: nowrap; }
+  .footer .pageno { font-family: ui-monospace, Menlo, monospace; }
+
+  /* Reusable typographic atoms */
+  .eyebrow {
+    font-size: 16px; font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #B9E045;
+  }
+  .display {
+    font-weight: 700; line-height: 0.96;
+    letter-spacing: -0.035em;
+    color: #fff; text-wrap: balance;
+  }
+  .display em { font-style: normal; color: #B9E045; }
+  .body {
+    font-weight: 400;
+    color: #9CA3AF;
+    line-height: 1.45;
+  }
+  .pad {
+    position: absolute; inset: 96px;
+    display: flex; flex-direction: column;
+  }
+
+  /* ============================================================
+     SLIDE 1 — Title
+     ============================================================ */
+  .s-title { display: grid; grid-template-rows: auto 1fr auto; gap: 32px; }
+  .s-title .eyebrow-row { display: flex; align-items: center; gap: 18px; }
+  .s-title .eyebrow-row img { height: 36px; }
+  .s-title h1 {
+    margin: auto 0;
+    font-size: 168px; font-weight: 700;
+    line-height: 0.95; letter-spacing: -0.045em;
+    color: #fff; text-wrap: balance;
+  }
+  .s-title h1 em { font-style: normal; color: #B9E045; }
+  .s-title .sub {
+    font-family: "Inter Light", "Inter", sans-serif; font-weight: 300;
+    font-size: 30px; line-height: 1.35;
+    color: #9CA3AF; max-width: 1100px;
+  }
+  .s-title .ringbg {
+    position: absolute; right: -240px; top: -180px;
+    width: 1200px; height: 1200px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(185,224,69,0.08), transparent 70%);
+    pointer-events: none;
+  }
+
+  /* ============================================================
+     SLIDE 2 — Timeline
+     ============================================================ */
+  .s-timeline .header { max-width: 1500px; margin-bottom: 64px; }
+  .s-timeline h2 { font-size: 96px; font-weight: 700; line-height: 0.98; letter-spacing: -0.035em; }
+  .s-timeline h2 em { font-style: normal; color: #B9E045; }
+  .s-timeline .lede { margin-top: 24px; font-size: 26px; color: #9CA3AF; max-width: 1100px; line-height: 1.4; }
+  .s-timeline .track {
+    position: relative;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+    margin-top: 32px;
+  }
+  .s-timeline .track::before {
+    content: ""; position: absolute; top: 28px; left: 24px; right: 24px;
+    height: 1px; background: linear-gradient(to right, transparent, rgba(185,224,69,0.5), rgba(185,224,69,0.5), transparent);
+  }
+  .s-timeline .col { padding-top: 80px; position: relative; }
+  .s-timeline .col::before {
+    content: ""; position: absolute; top: 22px; left: 32px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: #B9E045; box-shadow: 0 0 18px rgba(185,224,69,0.6);
+  }
+  .s-timeline .year { color: #B9E045; font-weight: 700; font-size: 26px; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .s-timeline .label { font-size: 36px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 18px; }
+  .s-timeline .text  { font-size: 19px; color: #9CA3AF; line-height: 1.5; max-width: 380px; }
+  .s-timeline .summary {
+    margin-top: 56px; padding: 28px 32px;
+    border: 1px solid rgba(185,224,69,0.5);
+    border-radius: 24px;
+    box-shadow: 0 0 20px rgba(185,224,69,0.12);
+    font-size: 22px; color: #fff; line-height: 1.4;
+    max-width: 1500px;
+  }
+  .s-timeline .summary em { font-style: normal; color: #B9E045; font-weight: 600; }
+
+  /* ============================================================
+     SLIDE 3 — Section opener (rocket)
+     ============================================================ */
+  .s-opener { padding: 0 !important; inset: 0; }
+  .s-opener .rocket {
+    position: absolute; right: 0; top: 0;
+    height: 100%; width: 60%; object-fit: cover; object-position: center;
+  }
+  .s-opener .copy {
+    position: absolute; left: 96px; top: 50%;
+    transform: translateY(-50%);
+    max-width: 800px;
+  }
+  .s-opener .eyebrow { margin-bottom: 32px; }
+  .s-opener h2 {
+    font-size: 128px; font-weight: 700; line-height: 0.92;
+    letter-spacing: -0.04em; color: #fff;
+  }
+  .s-opener h2 em { font-style: normal; color: #B9E045; }
+  .s-opener .lede {
+    margin-top: 32px; font-size: 28px; color: #9CA3AF;
+    line-height: 1.4; max-width: 700px;
+  }
+
+  /* ============================================================
+     SLIDE 4 — Service stack
+     ============================================================ */
+  .s-stack h2 { font-size: 96px; font-weight: 700; line-height: 1; letter-spacing: -0.035em; }
+  .s-stack h2 .accent { color: #B9E045; }
+  .s-stack .lede { margin-top: 20px; font-size: 24px; color: #9CA3AF; max-width: 1100px; }
+  .s-stack .grid {
+    margin-top: 64px;
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 32px;
+  }
+  .s-stack .col { padding: 28px 24px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.08); background: rgba(255,255,255,0.02); display: flex; flex-direction: column; gap: 14px; }
+  .s-stack .num { font-size: 36px; font-weight: 700; letter-spacing: -0.03em; color: #B9E045; line-height: 1; }
+  .s-stack .head { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; }
+  .s-stack .list { font-size: 18px; color: #9CA3AF; line-height: 1.75; }
+
+  /* ============================================================
+     SLIDE 5 — Inflection / chart
+     ============================================================ */
+  .s-data .header { max-width: 1500px; margin-bottom: 56px; }
+  .s-data h2 { font-size: 96px; font-weight: 700; line-height: 0.98; letter-spacing: -0.035em; }
+  .s-data h2 em { font-style: normal; color: #B9E045; }
+  .s-data .lede { margin-top: 18px; font-size: 24px; color: #9CA3AF; max-width: 1000px; }
+  .s-data .main { display: grid; grid-template-columns: 1fr 540px; gap: 64px; align-items: stretch; flex: 1; }
+  .s-data .chart {
+    position: relative;
+    border-radius: 24px; padding: 36px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.015);
+    display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .s-data .chart-head { display: flex; align-items: center; justify-content: space-between; }
+  .s-data .axis { font-size: 14px; color: #6B7280; font-family: ui-monospace, Menlo, monospace; letter-spacing: 0.18em; text-transform: uppercase; }
+  .s-data .legend { display: flex; gap: 24px; font-size: 14px; color: #9CA3AF; }
+  .s-data .legend .swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: middle; margin-right: 8px; }
+  .s-data .bars {
+    display: flex; align-items: stretch; justify-content: space-around;
+    gap: 32px; flex: 1; min-height: 0; margin-top: 12px;
+  }
+  .s-data .bar-col { display: flex; flex-direction: column; align-items: center; gap: 14px; justify-content: flex-end; flex: 1; min-width: 0; }
+  .s-data .pair {
+    width: 100%; display: flex; align-items: flex-end; justify-content: center;
+    gap: 10px; flex: 1; min-height: 0;
+  }
+  .s-data .bar-rev { width: 40%; max-width: 90px; background: linear-gradient(180deg, #C8EE56, #B9E045 60%, #6B8520); border-radius: 8px 8px 0 0; box-shadow: 0 0 28px rgba(185,224,69,0.5); position: relative; }
+  .s-data .bar-eb  { width: 40%; max-width: 90px; background: rgba(185,224,69,0.18); border: 1px solid rgba(185,224,69,0.55); border-bottom: 0; border-radius: 8px 8px 0 0; position: relative; }
+  .s-data .bar-rev .num, .s-data .bar-eb .num {
+    position: absolute; top: -34px; left: 50%; transform: translateX(-50%);
+    font-size: 20px; font-weight: 700; color: #fff; white-space: nowrap;
+  }
+  .s-data .bar-eb .num { color: #B9E045; }
+  .s-data .bar-eb { position: relative; }
+  .s-data .yr { font-size: 18px; color: #9CA3AF; }
+  .s-data .yr.now { color: #fff; font-weight: 700; }
+  .s-data .legend .swatch.rev { background: #B9E045; }
+  .s-data .legend .swatch.eb  { background: rgba(185,224,69,0.25); border: 1px solid #B9E045; }
+  .s-data .callouts { display: flex; flex-direction: column; gap: 20px; }
+  .s-data .call { padding: 24px; border-radius: 20px; border: 1px solid rgba(185,224,69,0.5); background: rgba(185,224,69,0.03); box-shadow: 0 0 18px rgba(185,224,69,0.1); }
+  .s-data .call .kpi { font-size: 56px; font-weight: 700; color: #B9E045; line-height: 1; letter-spacing: -0.04em; }
+  .s-data .call .ttl { font-size: 22px; font-weight: 700; margin-top: 12px; }
+  .s-data .call .desc { font-size: 17px; color: #9CA3AF; margin-top: 8px; line-height: 1.4; }
+
+  /* ============================================================
+     SLIDE 6 — Revenue mix
+     ============================================================ */
+  .s-mix .header { max-width: 1500px; margin-bottom: 56px; }
+  .s-mix h2 { font-size: 96px; font-weight: 700; line-height: 0.98; letter-spacing: -0.035em; }
+  .s-mix h2 em { font-style: normal; color: #B9E045; }
+  .s-mix .lede { margin-top: 16px; font-size: 22px; color: #9CA3AF; max-width: 1200px; }
+  .s-mix .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; flex: 1; align-items: stretch; }
+  .s-mix .tile {
+    position: relative;
+    border-radius: 24px;
+    border: 1px solid rgba(185,224,69,0.5);
+    background: rgba(10,10,10,0.55);
+    box-shadow: 0 0 20px rgba(185,224,69,0.12);
+    padding: 40px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .s-mix .tile.featured { border-color: rgba(185,224,69,0.9); box-shadow: 0 0 0 1px rgba(185,224,69,0.5), 0 0 36px rgba(185,224,69,0.25); }
+  .s-mix .cap { font-size: 16px; color: #9CA3AF; letter-spacing: 0.16em; text-transform: uppercase; }
+  .s-mix .pct { font-size: 168px; font-weight: 700; letter-spacing: -0.05em; line-height: 0.9; color: #fff; }
+  .s-mix .pct em { font-style: normal; color: #B9E045; }
+  .s-mix .ttl { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
+  .s-mix .desc { font-size: 19px; color: #9CA3AF; line-height: 1.45; }
+  .s-mix .footnote {
+    margin-top: 36px; padding: 20px 32px;
+    border-radius: 999px; border: 1px solid rgba(185,224,69,0.5);
+    background: rgba(185,224,69,0.04);
+    font-size: 20px; color: #fff; text-align: center;
+    align-self: center;
+  }
+  .s-mix .footnote em { color: #B9E045; font-style: normal; font-weight: 600; }
+
+  /* ============================================================
+     SLIDE 7 — Big quote
+     ============================================================ */
+  .s-quote {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 200px;
+  }
+  .s-quote .wrap { max-width: 1500px; text-align: left; }
+  .s-quote .mark { font-size: 88px; line-height: 1; color: #B9E045; margin-bottom: 24px; }
+  .s-quote blockquote {
+    margin: 0;
+    font-size: 76px; font-weight: 700; line-height: 1.05;
+    letter-spacing: -0.035em; color: #fff;
+    text-wrap: balance;
+  }
+  .s-quote blockquote em { font-style: normal; color: #B9E045; }
+  .s-quote .cite { margin-top: 40px; font-size: 22px; color: #9CA3AF; letter-spacing: 0.16em; text-transform: uppercase; }
+
+  /* ============================================================
+     SLIDE 8 — Closing / contact
+     ============================================================ */
+  .s-close { display: grid; grid-template-rows: 1fr auto; gap: 56px; }
+  .s-close .eyebrow { margin-bottom: 24px; }
+  .s-close h2 {
+    font-size: 144px; font-weight: 700; line-height: 0.94;
+    letter-spacing: -0.04em;
+  }
+  .s-close h2 em { font-style: normal; color: #B9E045; }
+  .s-close .lede {
+    margin-top: 32px;
+    font-size: 30px; color: #9CA3AF; line-height: 1.4;
+    max-width: 1200px;
+  }
+  .s-close .lede p { margin: 0 0 6px 0; }
+  .s-close .lede p strong { color: #fff; font-weight: 600; }
+  .s-close .team { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .s-close .person {
+    padding: 24px 28px; border-radius: 20px;
+    border: 1px solid rgba(255,255,255,0.10);
+    background: rgba(255,255,255,0.02);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .s-close .person .name { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; }
+  .s-close .person .role { font-size: 14px; color: #B9E045; letter-spacing: 0.18em; text-transform: uppercase; }
+  .s-close .person .mail { font-size: 18px; color: #9CA3AF; font-family: ui-monospace, Menlo, monospace; margin-top: 8px; }
+  .s-close .ringbg {
+    position: absolute; right: -220px; bottom: -220px;
+    width: 900px; height: 900px; border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(185,224,69,0.15), transparent 70%);
+    pointer-events: none;
+  }
+
+</style>
+</head>
+<body class="mb-root">
+
+<deck-stage>
+
+  <!-- ============= SLIDE 1 — TITLE ============= -->
+  <section class="slide bg-aurora s-title" data-screen-label="01 Title">
+    <div class="ringbg"></div>
+    <div class="pad">
+      <div class="eyebrow-row">
+        <img src="../assets/logo-moburst-color.png" alt="Moburst">
+        <span class="eyebrow">Private · Confidential · Investment Memorandum · 2026</span>
+      </div>
+      <h1>
+        The AI‑Native<br>
+        Growth Operating <em>System</em>.
+      </h1>
+      <p class="sub">The software‑driven operating system powering the future of digital growth.</p>
+    </div>
+    <div class="footer">
+      <div class="lockup"><img src="../assets/logo-moburst-color.png" alt=""><span>Moburst · 2026</span></div>
+      <span class="pageno">01</span>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 2 — TIMELINE ============= -->
+  <section class="slide bg-aurora s-timeline" data-screen-label="02 Timeline">
+    <div class="pad">
+      <div class="header">
+        <div class="eyebrow" style="margin-bottom:20px">Track record</div>
+        <h2>13 years of disciplined <em>evolution</em>.</h2>
+        <p class="lede">From agency roots to a tech‑enabled platform — built through organic growth and strategic M&amp;A.</p>
+      </div>
+      <div class="track">
+        <div class="col">
+          <div class="year">2013 – 2018</div>
+          <div class="label">Foundation</div>
+          <div class="text">Opened IL &amp; US offices. Secured Google as anchor client with 30+ brands. Scaled organically to sustainable profitability.</div>
+        </div>
+        <div class="col">
+          <div class="year">2019 – 2023</div>
+          <div class="label">M&amp;A Proof</div>
+          <div class="text">Acquired Clutch (Video/UI‑UX) and Layer (Web/App Dev). Proved the integration playbook. Reached $5M EBITDA.</div>
+        </div>
+        <div class="col">
+          <div class="year">2024 – 2025</div>
+          <div class="label">Scale</div>
+          <div class="text">Acquired Uproar PR, Kitcaster, Rhythm. Consolidated 5 firms into one operational stack. Heavy R&amp;D into AI.</div>
+        </div>
+        <div class="col">
+          <div class="year">2026</div>
+          <div class="label">Inflection</div>
+          <div class="text">Full migration to AI‑native delivery. 10 proprietary AI products live. 2 additional acquisitions in active DD.</div>
+        </div>
+      </div>
+      <div class="summary">
+        Proven <em>M&amp;A machine</em> with a 13‑year track record of integrating specialized talent into a unified tech‑driven platform.
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lockup"><img src="../assets/logo-moburst-color.png" alt=""><span>Private · Confidential · 2026</span></div>
+      <span class="pageno">02</span>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 3 — SECTION OPENER (rocket) ============= -->
+  <section class="slide bg-starfield s-opener" data-screen-label="03 Section opener">
+    <img class="rocket" src="../assets/img-rocket.png" alt="">
+    <div class="copy">
+      <div class="eyebrow">Section II</div>
+      <h2>The infrastructure<br>is <em>built</em>.</h2>
+      <p class="lede">A 13‑year run‑up, five integrations, and one proprietary AI core — converging on a single platform.</p>
+    </div>
+    <div class="footer">
+      <div class="lockup"><img src="../assets/logo-moburst-color.png" alt=""><span>Private · Confidential · 2026</span></div>
+      <span class="pageno">03</span>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 4 — SERVICE STACK ============= -->
+  <section class="slide bg-grid s-stack" data-screen-label="04 Service stack">
+    <div class="pad">
+      <div>
+        <div class="eyebrow" style="margin-bottom:20px">What we do</div>
+        <h2>25<span class="accent">+</span> services. <em style="color:#B9E045;font-style:normal">One stack</em>.</h2>
+        <p class="lede">A single operational chassis covering strategy, organic, creative, media and product‑dev — orchestrated by gOS.</p>
+      </div>
+      <div class="grid">
+        <div class="col">
+          <span class="num">01</span>
+          <span class="head">Marketing<br>Strategy</span>
+          <div class="list">Mobile Strategy<br>Digital Strategy<br>Social Strategy<br>Product Strategy<br>BI &amp; Analytics</div>
+        </div>
+        <div class="col">
+          <span class="num">02</span>
+          <span class="head">Organic<br>Awareness</span>
+          <div class="list">SEO &amp; AEO<br>ASO<br>CRO<br>PR &amp; Thought Leadership<br>Content &amp; Localization</div>
+        </div>
+        <div class="col">
+          <span class="num">03</span>
+          <span class="head">Creative<br>&amp; Content</span>
+          <div class="list">Concept &amp; Design<br>Video Production<br>Social Media Mgmt<br>App Store Assets<br>Army of Creators (UGC)</div>
+        </div>
+        <div class="col">
+          <span class="num">04</span>
+          <span class="head">Media<br>Buying</span>
+          <div class="list">Social &amp; Search<br>Networks &amp; RTBs<br>Influencer Marketing<br>Email Marketing<br>OTT Advertising</div>
+        </div>
+        <div class="col">
+          <span class="num">05</span>
+          <span class="head">Product<br>&amp; Dev</span>
+          <div class="list">Product Consulting<br>UI / UX<br>Website Development<br>App Development<br>AI &amp; Digital Transformation</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lockup"><img src="../assets/logo-moburst-color.png" alt=""><span>Private · Confidential · 2026</span></div>
+      <span class="pageno">04</span>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 5 — INFLECTION CHART ============= -->
+  <section class="slide bg-aurora s-data" data-screen-label="05 Inflection chart">
+    <div class="pad">
+      <div class="header">
+        <div class="eyebrow" style="margin-bottom:20px">Financials</div>
+        <h2>2026 — the <em>financial inflection</em> point.</h2>
+        <p class="lede">Capitalizing on massive operational leverage and strategic M&amp;A.</p>
+      </div>
+      <div class="main">
+        <div class="chart">
+          <div class="chart-head">
+            <span class="axis">$mn</span>
+            <div class="legend">
+              <span><span class="swatch rev"></span>Revenue</span>
+              <span><span class="swatch eb"></span>Adj. EBITDA</span>
+            </div>
+          </div>
+          <div class="bars">
+            <div class="bar-col">
+              <div class="pair">
+                <div class="bar-rev" style="height: 52%"><span class="num">13.1</span></div>
+                <div class="bar-eb"  style="height: 11%"><span class="num">2.65</span></div>
+              </div>
+              <span class="yr">2024</span>
+            </div>
+            <div class="bar-col">
+              <div class="pair">
+                <div class="bar-rev" style="height: 57%"><span class="num">14.2</span></div>
+                <div class="bar-eb"  style="height: 14%"><span class="num">3.4</span></div>
+              </div>
+              <span class="yr">2025</span>
+            </div>
+            <div class="bar-col">
+              <div class="pair">
+                <div class="bar-rev" style="height: 100%"><span class="num">25</span></div>
+                <div class="bar-eb"  style="height: 22%"><span class="num">5.5</span></div>
+              </div>
+              <span class="yr now">2026 projection</span>
+            </div>
+          </div>
+        </div>
+        <div class="callouts">
+          <div class="call">
+            <div class="kpi">+75%</div>
+            <div class="ttl">Top‑line scale (last 9 months)</div>
+            <div class="desc">Rapid expansion unlocked by deploying the gOS core across all acquired business units.</div>
+          </div>
+          <div class="call">
+            <div class="kpi">10×</div>
+            <div class="ttl">Hockey‑stick velocity</div>
+            <div class="desc">Incremental 2026 revenue (~$11M) is 10× the entire growth achieved in 2025 (~$1.1M).</div>
+          </div>
+          <div class="call">
+            <div class="kpi">$25M</div>
+            <div class="ttl">Run‑rate</div>
+            <div class="desc">Integrates organic growth and M&amp;A assets into a single financial run‑rate.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lockup"><img src="../assets/logo-moburst-color.png" alt=""><span>Private · Confidential · 2026</span></div>
+      <span class="pageno">05</span>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 6 — REVENUE MIX ============= -->
+  <section class="slide bg-aurora s-mix" data-screen-label="06 Revenue mix">
+    <div class="pad">
+      <div class="header">
+        <div class="eyebrow" style="margin-bottom:20px">Mix · 2026</div>
+        <h2>Future‑proofing the <em>revenue mix</em>.</h2>
+        <p class="lede">Transitioning to a high‑multiple tech‑led model — 18 months ago we were 100% core digital.</p>
+      </div>
+      <div class="grid">
+        <div class="tile">
+          <span class="cap">Foundation</span>
+          <span class="pct">65<em>%</em></span>
+          <div>
+            <div class="ttl">Core Digital Services</div>
+            <div class="desc">High‑stability, recurring contracts. Scalable foundation for enterprise growth.</div>
+          </div>
+        </div>
+        <div class="tile">
+          <span class="cap">Leverage</span>
+          <span class="pct">20<em>%</em></span>
+          <div>
+            <div class="ttl">AI‑Enabled Services</div>
+            <div class="desc">Higher‑margin delivery powered by gOS. Operational leverage without headcount.</div>
+          </div>
+        </div>
+        <div class="tile featured">
+          <span class="cap">Multiple</span>
+          <span class="pct">15<em>%</em></span>
+          <div>
+            <div class="ttl">Tech Product Revenue</div>
+            <div class="desc">Pure IP revenue. AEO and AIaaS subscriptions. 90%+ gross margins.</div>
+          </div>
+        </div>
+      </div>
+      <div class="footnote">As Tech/IP revenue crosses <em>30%</em> of the mix, Moburst justifies a <em>SaaS‑level multiple</em> (10×–15×) on revenue rather than a service‑level multiple.</div>
+    </div>
+    <div class="footer">
+      <div class="lockup"><img src="../assets/logo-moburst-color.png" alt=""><span>Private · Confidential · 2026</span></div>
+      <span class="pageno">06</span>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 7 — BIG QUOTE ============= -->
+  <section class="slide bg-aurora s-quote" data-screen-label="07 Big quote">
+    <div class="wrap">
+      <div class="mark">“</div>
+      <blockquote>
+        The gOS economic moat — linear agency labor becomes <em>exponential software delivery</em>. Revenue expands with zero wage‑inflation risk.
+      </blockquote>
+      <div class="cite">Gilad Bechar · CEO · 2026</div>
+    </div>
+    <div class="footer">
+      <div class="lockup"><img src="../assets/logo-moburst-color.png" alt=""><span>Private · Confidential · 2026</span></div>
+      <span class="pageno">07</span>
+    </div>
+  </section>
+
+  <!-- ============= SLIDE 8 — CLOSING ============= -->
+  <section class="slide bg-aurora s-close" data-screen-label="08 Closing">
+    <div class="ringbg"></div>
+    <div class="pad">
+      <div>
+        <div class="eyebrow">The horizon to $500M</div>
+        <h2>Join the<br>Growth Operating <em>System</em>.</h2>
+        <div class="lede">
+          <p><strong>The infrastructure is built.</strong></p>
+          <p><strong>The growth is realized.</strong></p>
+          <p>The <span style="color:#B9E045">$125M entry window</span> is closing.</p>
+        </div>
+      </div>
+      <div class="team">
+        <div class="person">
+          <span class="role">CEO</span>
+          <span class="name">Gilad Bechar</span>
+          <span class="mail">gilad@moburst.com</span>
+        </div>
+        <div class="person">
+          <span class="role">COO</span>
+          <span class="name">Lior Eldan</span>
+          <span class="mail">lior@moburst.com</span>
+        </div>
+        <div class="person">
+          <span class="role">Director · Corp Dev</span>
+          <span class="name">Snir Shervi</span>
+          <span class="mail">snir.shervi@moburst.com</span>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="lockup"><img src="../assets/logo-moburst-color.png" alt=""><span>Confidential · 2026</span></div>
+      <span class="pageno">08</span>
+    </div>
+  </section>
+
+</deck-stage>
+
+</body>
+</html>

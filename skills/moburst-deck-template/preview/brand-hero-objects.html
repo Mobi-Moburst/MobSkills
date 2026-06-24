@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Brand · Hero objects</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; }
+  body {
+    width: 700px; height: 220px; background: #000;
+    padding: 0; box-sizing: border-box;
+    font-family: var(--mb-font-sans); color: #fff;
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0;
+  }
+  .c { position: relative; display: flex; align-items: center; justify-content: center; padding: 12px; overflow: hidden; }
+  .c + .c { border-left: 1px solid rgba(255,255,255,0.06); }
+  .c img { max-width: 100%; max-height: 160px; object-fit: contain; }
+  .cap {
+    position: absolute; bottom: 10px; left: 12px;
+    font-size: 10.5px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--mb-fg-3);
+  }
+</style>
+</head>
+<body class="mb-root">
+  <div class="c">
+    <img src="../assets/img-rocket.png" alt="Rocket render">
+    <span class="cap">Rocket · launch</span>
+  </div>
+  <div class="c">
+    <img src="../assets/img-gem-green.png" alt="Emerald gem">
+    <span class="cap">Gem · prism</span>
+  </div>
+  <div class="c">
+    <img src="../assets/img-services-loop.png" alt="Services loop">
+    <span class="cap">Services loop</span>
+  </div>
+</body>
+</html>
