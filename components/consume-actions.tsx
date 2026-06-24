@@ -17,11 +17,16 @@ export function ConsumeActions({
   version,
   skillMarkdown,
   installSnippet,
+  downloadable = true,
+  sizeLabel,
 }: {
   slug: string;
   version: string | null;
   skillMarkdown: string;
   installSnippet: string;
+  /** False when the skill exceeds the inline-zip cap — show install instead of a 413. */
+  downloadable?: boolean;
+  sizeLabel?: string;
 }) {
   const [copied, setCopied] = useState<null | "skill" | "install">(null);
 
@@ -39,13 +44,22 @@ export function ConsumeActions({
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-wrap gap-2">
-        <a
-          href={`/api/skills/${slug}/download`}
-          onClick={() => logEvent(slug, "download", version)}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-3 py-2 text-sm font-semibold text-background transition hover:bg-accent/90"
-        >
-          ↓ Download .zip
-        </a>
+        {downloadable ? (
+          <a
+            href={`/api/skills/${slug}/download`}
+            onClick={() => logEvent(slug, "download", version)}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-accent px-3 py-2 text-sm font-semibold text-background transition hover:bg-accent/90"
+          >
+            ↓ Download .zip
+          </a>
+        ) : (
+          <span
+            title={`Too large to zip inline${sizeLabel ? ` (${sizeLabel})` : ""}. Use the install command below.`}
+            className="inline-flex cursor-not-allowed items-center gap-1.5 rounded-lg border border-card-border bg-card px-3 py-2 text-sm font-medium text-text-muted"
+          >
+            ↓ Too large to download{sizeLabel ? ` (${sizeLabel})` : ""}
+          </span>
+        )}
         <button
           onClick={() => copy("skill", skillMarkdown)}
           className="inline-flex items-center gap-1.5 rounded-lg border border-card-border bg-card px-3 py-2 text-sm font-medium text-text-secondary transition hover:border-accent/40 hover:text-text-primary"
@@ -53,6 +67,11 @@ export function ConsumeActions({
           {copied === "skill" ? "✓ Copied" : "Copy SKILL.md"}
         </button>
       </div>
+      {!downloadable && (
+        <p className="text-xs text-text-muted">
+          Over the in-portal download limit — use the install command below to fetch it from GitHub.
+        </p>
+      )}
 
       <div className="rounded-lg border border-card-border bg-surface p-3">
         <div className="mb-1.5 flex items-center justify-between">

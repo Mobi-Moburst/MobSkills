@@ -2,7 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { readFileSync } from "node:fs";
 import path from "node:path";
-import { getAllSkills, getSkill } from "@/lib/skills";
+import { getAllSkills, getSkill, getSkillSizeBytes, MAX_DOWNLOAD_BYTES } from "@/lib/skills";
 import { Markdown } from "@/components/markdown";
 import { TargetBadge } from "@/components/target-badge";
 import { ConsumeActions } from "@/components/consume-actions";
@@ -23,6 +23,12 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
   // Re-read the raw SKILL.md (with frontmatter) for the copy action.
   const rawSkillMd = readFileSync(path.join(process.cwd(), "skills", slug, "SKILL.md"), "utf8");
   const installSnippet = `npx degit ${REPO}/skills/${slug} ~/.claude/skills/${slug}`;
+
+  // Skills over the inline-zip cap (e.g. asset-heavy ones) can't be downloaded
+  // through the portal — surface the install command instead of a 413.
+  const sizeBytes = getSkillSizeBytes(slug);
+  const downloadable = sizeBytes <= MAX_DOWNLOAD_BYTES;
+  const sizeLabel = `${(sizeBytes / (1024 * 1024)).toFixed(1)} MB`;
 
   return (
     <div>
@@ -66,6 +72,8 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
               version={skill.version}
               skillMarkdown={rawSkillMd}
               installSnippet={installSnippet}
+              downloadable={downloadable}
+              sizeLabel={sizeLabel}
             />
           </section>
 

@@ -1,5 +1,5 @@
 import "server-only";
-import { existsSync, readFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 import { parseSkill } from "./frontmatter";
 import type { Skill, Target, Visibility, SkillStatus } from "./types";
@@ -84,6 +84,19 @@ export function getAllSkills(): Skill[] {
 
 export function getSkill(slug: string): Skill | null {
   return loadSkills().skills.find((s) => s.slug === slug) ?? null;
+}
+
+/**
+ * Hard cap on the inline zip download — kept under Vercel's 4.5 MB response limit.
+ * Shared by the download route (enforces 413) and the detail page (hides the button).
+ */
+export const MAX_DOWNLOAD_BYTES = 4 * 1024 * 1024;
+
+/** Total bytes of a skill folder, for the download size guard + UI. Cheap stat, no reads. */
+export function getSkillSizeBytes(slug: string): number {
+  const dir = path.join(SKILLS_DIR, slug);
+  if (!existsSync(dir)) return 0;
+  return listFilesRecursive(dir).reduce((n, rel) => n + statSync(path.join(dir, rel)).size, 0);
 }
 
 /** Read the raw bytes of every file in a skill folder — used to build the download zip. */
