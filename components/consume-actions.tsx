@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import type { Runtime } from "@/lib/types";
 
 function logEvent(slug: string, type: string, version: string | null) {
   // Fire-and-forget. In Phase 2 this lands in Postgres; for now /api/events logs it.
@@ -19,6 +20,7 @@ export function ConsumeActions({
   installSnippet,
   downloadable = true,
   sizeLabel,
+  runtime = "local",
 }: {
   slug: string;
   version: string | null;
@@ -27,6 +29,7 @@ export function ConsumeActions({
   /** False when the skill exceeds the inline-zip cap — show install instead of a 413. */
   downloadable?: boolean;
   sizeLabel?: string;
+  runtime?: Runtime;
 }) {
   const [copied, setCopied] = useState<null | "skill" | "install">(null);
 
@@ -43,6 +46,14 @@ export function ConsumeActions({
 
   return (
     <div className="flex flex-col gap-3">
+      {runtime === "hosted" && (
+        <div className="rounded-lg border border-[#4a9ef5]/25 bg-[#4a9ef5]/10 p-3 text-xs leading-relaxed text-text-secondary">
+          <span className="font-semibold text-[#7cbcff]">Hosted skill.</span>{" "}
+          Built for <strong>claude.ai / Claude Desktop</strong> — get the files below, then add it
+          as a skill there. Running it in local Claude Code or Codex needs path changes (it uses
+          <code className="mx-1 rounded bg-surface px-1">/mnt/skills</code>paths).
+        </div>
+      )}
       <div className="flex flex-wrap gap-2">
         {downloadable ? (
           <a

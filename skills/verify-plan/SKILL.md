@@ -2,6 +2,7 @@
 name: verify-plan
 description: Use after producing any implementation plan and before writing code, to rigorously self-review it — ground every assumption against the real code, argue against the plan adversarially, and score confidence by weakest dimension. Triggers on "verify the plan", "check this plan", "how confident are you".
 targets: [claude, codex]
+runtime: local
 version: 1.0.0
 visibility: internal
 tags: [planning, review, quality]
