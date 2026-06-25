@@ -9,6 +9,7 @@ import { FileList } from "@/components/file-list";
 import { TargetBadge } from "@/components/target-badge";
 import { RuntimeBadge } from "@/components/runtime-badge";
 import { ConsumeActions } from "@/components/consume-actions";
+import { SkillHealth } from "@/components/skill-health";
 
 const REPO = process.env.GITHUB_REPO ?? "Mobi-Moburst/MobSkills";
 
@@ -82,6 +83,8 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
               runtime={skill.runtime}
             />
           </section>
+
+          <SkillHealth skill={skill} />
 
           <section className="rounded-2xl border border-card-border bg-card/80 p-4 text-sm backdrop-blur-xl">
             <h2 className="mb-3 text-sm font-semibold text-text-primary">Details</h2>
