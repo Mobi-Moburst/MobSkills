@@ -4,6 +4,8 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { getAllSkills, getSkill, getSkillSizeBytes, MAX_DOWNLOAD_BYTES } from "@/lib/skills";
 import { Markdown } from "@/components/markdown";
+import { ExpandableBody } from "@/components/expandable-body";
+import { FileList } from "@/components/file-list";
 import { TargetBadge } from "@/components/target-badge";
 import { RuntimeBadge } from "@/components/runtime-badge";
 import { ConsumeActions } from "@/components/consume-actions";
@@ -37,7 +39,7 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
         ← All skills
       </Link>
 
-      <div className="mt-4 grid grid-cols-1 gap-8 lg:grid-cols-[1fr_300px]">
+      <div className="mt-4 grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_300px]" data-detail-grid>
         {/* Main content */}
         <article className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
@@ -60,7 +62,9 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
           <p className="mt-2 text-text-secondary">{skill.description}</p>
 
           <div className="mt-6 rounded-2xl border border-card-border bg-card/80 p-5 backdrop-blur-xl sm:p-7">
-            <Markdown>{skill.body}</Markdown>
+            <ExpandableBody>
+              <Markdown>{skill.body}</Markdown>
+            </ExpandableBody>
           </div>
         </article>
 
@@ -111,11 +115,7 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
 
           <section className="rounded-2xl border border-card-border bg-card/80 p-4 text-sm backdrop-blur-xl">
             <h2 className="mb-3 text-sm font-semibold text-text-primary">Files</h2>
-            <ul className="space-y-1 text-xs text-text-muted" style={{ fontFamily: "var(--font-mono)" }}>
-              {skill.files.map((f) => (
-                <li key={f}>{f}</li>
-              ))}
-            </ul>
+            <FileList files={skill.files} />
             <a
               href={`https://github.com/${REPO}/tree/main/skills/${skill.slug}`}
               target="_blank"
