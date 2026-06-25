@@ -2,7 +2,7 @@ import "server-only";
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 import { parseSkill } from "./frontmatter";
-import type { Skill, Target, Visibility, SkillStatus } from "./types";
+import type { Skill, Target, Visibility, SkillStatus, Runtime } from "./types";
 
 const SKILLS_DIR = path.join(process.cwd(), "skills");
 
@@ -59,6 +59,7 @@ export function loadSkills(): { skills: Skill[]; invalid: InvalidSkill[] } {
         tags: (d.tags as string[]) ?? [],
         owner: (d.owner as string) ?? null,
         status: ((d.status as SkillStatus) ?? "active"),
+        runtime: ((d.runtime as Runtime) ?? "local"),
         body: parsed.body,
         files: listFilesRecursive(path.join(SKILLS_DIR, slug)),
       });

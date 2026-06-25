@@ -2,6 +2,7 @@
 name: moburst-deck-template
 description: Re-skin existing slide decks (Google Slides, PPTX, Keynote) into Moburst-branded PPTX files that import cleanly into Google Slides. Every deck, slide, or presentation request produces a .pptx file built with pptxgenjs — never HTML. Use whenever the user mentions "redesign this deck", "re-skin", "make this on-brand", "Moburst deck", "investor deck", "apply our design system to these slides", or shares a Google Slides URL / PPTX upload and wants it on-brand.
 targets: [claude]
+runtime: hosted
 version: 1.0.0
 visibility: internal
 tags: [branding, design, presentations, pptx, deck]

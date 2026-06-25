@@ -5,6 +5,7 @@ import path from "node:path";
 import { getAllSkills, getSkill, getSkillSizeBytes, MAX_DOWNLOAD_BYTES } from "@/lib/skills";
 import { Markdown } from "@/components/markdown";
 import { TargetBadge } from "@/components/target-badge";
+import { RuntimeBadge } from "@/components/runtime-badge";
 import { ConsumeActions } from "@/components/consume-actions";
 
 const REPO = process.env.GITHUB_REPO ?? "Mobi-Moburst/MobSkills";
@@ -74,6 +75,7 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
               installSnippet={installSnippet}
               downloadable={downloadable}
               sizeLabel={sizeLabel}
+              runtime={skill.runtime}
             />
           </section>
 
@@ -86,6 +88,9 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
                     <TargetBadge key={t} target={t} />
                   ))}
                 </div>
+              </Row>
+              <Row label="Runtime">
+                <RuntimeBadge runtime={skill.runtime} />
               </Row>
               <Row label="Visibility">
                 <span className="capitalize">{skill.visibility}</span>

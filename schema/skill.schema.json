@@ -45,6 +45,11 @@
     "owner": {
       "type": "string",
       "format": "email"
+    },
+    "runtime": {
+      "enum": ["hosted", "local"],
+      "default": "local",
+      "description": "Where the skill runs: 'hosted' = Anthropic cloud sandbox (claude.ai / Claude Desktop, /mnt/skills paths); 'local' = runs anywhere (Claude Code CLI, Codex)."
     }
   },
   "allOf": [

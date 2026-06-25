@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Skill } from "@/lib/types";
 import { TargetBadge } from "./target-badge";
+import { RuntimeBadge } from "./runtime-badge";
 
 export type SkillSummary = Omit<Skill, "body" | "files">;
 
@@ -26,6 +27,7 @@ export function SkillCard({ skill, index }: { skill: SkillSummary; index: number
             {skill.targets.map((t) => (
               <TargetBadge key={t} target={t} />
             ))}
+            <RuntimeBadge runtime={skill.runtime} />
             {skill.status === "deprecated" && (
               <span className="inline-flex items-center gap-1 rounded-full bg-negative/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-negative ring-1 ring-inset ring-negative/25">
                 <span className="h-1.5 w-1.5 rounded-full bg-negative" />
