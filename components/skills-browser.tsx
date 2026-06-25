@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import type { Target } from "@/lib/types";
 import { SkillCard, type SkillSummary } from "./skill-card";
 
@@ -111,10 +112,8 @@ export function SkillsBrowser({
             <SkillCard key={s.slug} skill={s} index={i} />
           ))}
           {/* Ghost tile — keeps the grid intentional and guides adding skills */}
-          <a
+          <Link
             href={newSkillHref}
-            target="_blank"
-            rel="noopener noreferrer"
             className="group flex min-h-[180px] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-card-border text-text-muted transition-colors hover:border-accent/40 hover:text-text-secondary"
           >
             <span className="flex h-10 w-10 items-center justify-center rounded-full border border-card-border transition-colors group-hover:border-accent/40">
@@ -123,8 +122,8 @@ export function SkillsBrowser({
               </svg>
             </span>
             <span className="text-sm font-medium">Add a skill</span>
-            <span className="text-xs text-text-muted/60">opens a PR on GitHub</span>
-          </a>
+            <span className="text-xs text-text-muted/60">guided generator</span>
+          </Link>
         </div>
       )}
     </div>

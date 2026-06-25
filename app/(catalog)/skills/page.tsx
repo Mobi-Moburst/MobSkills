@@ -1,5 +1,7 @@
-import { getAllSkills, getFacets } from "@/lib/skills";
+import Link from "next/link";
+import { loadSkills, getFacets } from "@/lib/skills";
 import { SkillsBrowser } from "@/components/skills-browser";
+import { InvalidSkillsNotice } from "@/components/invalid-skills-notice";
 import type { SkillSummary } from "@/components/skill-card";
 
 export const dynamic = "force-static";
@@ -7,7 +9,7 @@ export const dynamic = "force-static";
 const REPO = process.env.GITHUB_REPO ?? "Mobi-Moburst/MobSkills";
 
 export default function SkillsPage() {
-  const skills = getAllSkills();
+  const { skills, invalid } = loadSkills();
   const { targets, tags } = getFacets();
 
   const summaries: SkillSummary[] = skills.map((s) => {
@@ -17,7 +19,7 @@ export default function SkillsPage() {
     return rest;
   });
 
-  const newSkillHref = `https://github.com/${REPO}/new/main?filename=skills/new-skill/SKILL.md`;
+  const newSkillHref = "/skills/new";
 
   // Colors come from the design tokens (globals.css @theme); color-mix builds
   // the tint/border alpha so we never hardcode off-palette hex.
@@ -63,17 +65,15 @@ export default function SkillsPage() {
             Moburst&apos;s agent skills for Claude and Codex — browse, filter, and download.
           </p>
         </div>
-        <a
+        <Link
           href={newSkillHref}
-          target="_blank"
-          rel="noopener noreferrer"
           className="inline-flex items-center gap-1.5 rounded-lg border border-card-border bg-card/40 px-3 py-2 text-sm font-medium text-text-secondary backdrop-blur-xl transition hover:border-accent/40 hover:text-text-primary"
         >
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 5v14M5 12h14" />
           </svg>
           New skill
-        </a>
+        </Link>
       </div>
 
       {/* Stats strip */}
@@ -115,6 +115,8 @@ export default function SkillsPage() {
       </div>
 
       <SkillsBrowser skills={summaries} targets={targets} tags={tags} newSkillHref={newSkillHref} />
+
+      <InvalidSkillsNotice invalid={invalid} repo={REPO} />
     </div>
   );
 }
