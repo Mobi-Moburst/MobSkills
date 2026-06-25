@@ -10,6 +10,8 @@ import { TargetBadge } from "@/components/target-badge";
 import { RuntimeBadge } from "@/components/runtime-badge";
 import { ConsumeActions } from "@/components/consume-actions";
 import { SkillHealth } from "@/components/skill-health";
+import { TableOfContents } from "@/components/table-of-contents";
+import { extractHeadings } from "@/lib/toc";
 
 const REPO = process.env.GITHUB_REPO ?? "Mobi-Moburst/MobSkills";
 
@@ -33,6 +35,8 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
   const sizeBytes = getSkillSizeBytes(slug);
   const downloadable = sizeBytes <= MAX_DOWNLOAD_BYTES;
   const sizeLabel = `${(sizeBytes / (1024 * 1024)).toFixed(1)} MB`;
+
+  const headings = extractHeadings(skill.body);
 
   return (
     <div>
@@ -70,7 +74,9 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
         </article>
 
         {/* Sidebar */}
-        <aside className="space-y-5">
+        <aside className="space-y-5 lg:sticky lg:top-6 lg:self-start">
+          {headings.length >= 2 && <TableOfContents headings={headings} />}
+
           <section className="rounded-2xl border border-card-border bg-card/80 p-4 backdrop-blur-xl">
             <h2 className="mb-3 text-sm font-semibold text-text-primary">Get this skill</h2>
             <ConsumeActions

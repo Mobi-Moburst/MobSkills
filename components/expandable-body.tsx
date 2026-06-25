@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 // Fallback collapsed height (mobile / when no sidebar to align to).
 const FALLBACK_MAX_PX = 520;
@@ -56,6 +56,36 @@ export function ExpandableBody({ children }: { children: React.ReactNode }) {
       cancelAnimationFrame(raf);
       ro.disconnect();
       window.removeEventListener("resize", measure);
+    };
+  }, []);
+
+  // Anchor links (heading "#" links + the table of contents) point at headings that may
+  // be inside the collapsed region. When the hash targets one of OUR descendants, expand
+  // first, then scroll once the max-height transition settles.
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    function goToHash() {
+      const id = decodeURIComponent(window.location.hash.slice(1));
+      if (!id) return;
+      let target: Element | null = null;
+      try {
+        target = clipRef.current?.querySelector(`#${CSS.escape(id)}`) ?? null;
+      } catch {
+        return; // exotic id → invalid selector; ignore
+      }
+      if (!target) return; // not one of ours — leave it alone
+      const el = target;
+      setExpanded(true);
+      // 300ms is the max-height transition (see clip className); scroll just after it settles.
+      clearTimeout(timer);
+      timer = setTimeout(() => el.scrollIntoView({ behavior: "smooth", block: "start" }), 340);
+    }
+
+    goToHash(); // handle a hash present on initial load
+    window.addEventListener("hashchange", goToHash);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("hashchange", goToHash);
     };
   }, []);
 
