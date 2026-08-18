@@ -28,7 +28,13 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
 
   // Re-read the raw SKILL.md (with frontmatter) for the copy action.
   const rawSkillMd = readFileSync(path.join(process.cwd(), "skills", slug, "SKILL.md"), "utf8");
-  const installSnippet = `npx degit ${REPO}/skills/${slug} ~/.claude/skills/${slug}`;
+  // Plugin install, deliberately NOT `npx degit`/zip-drop. A bare skill folder
+  // carries no hooks/hooks.json and no reporter, and its frontmatter hook resolves
+  // ${CLAUDE_PLUGIN_ROOT} to nothing, so it emits no usage events — silently. Such a
+  // skill then reads as permanently "dormant", which is the one reading that would
+  // make us delete a skill people actually use. One install path, one source of truth.
+  const installSnippet = `claude plugin marketplace add ${REPO}\nclaude plugin install mobskills@mobskills`;
+  const invokeSnippet = `/mobskills:${slug}`;
 
   // Skills over the inline-zip cap (e.g. asset-heavy ones) can't be downloaded
   // through the portal — surface the install command instead of a 413.
@@ -84,6 +90,7 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
               version={skill.version}
               skillMarkdown={rawSkillMd}
               installSnippet={installSnippet}
+              invokeSnippet={invokeSnippet}
               downloadable={downloadable}
               sizeLabel={sizeLabel}
               runtime={skill.runtime}

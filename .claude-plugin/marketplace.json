@@ -1,0 +1,17 @@
+{
+  "name": "mobskills",
+  "owner": {
+    "name": "Moburst",
+    "email": "bi-data@moburst.com"
+  },
+  "description": "Moburst's internal agent skills library.",
+  "plugins": [
+    {
+      "name": "mobskills",
+      "source": "./",
+      "description": "Moburst's internal agent skills, with usage telemetry that reports to the MobSkills portal.",
+      "category": "productivity",
+      "tags": ["moburst", "internal", "skills"]
+    }
+  ]
+}
