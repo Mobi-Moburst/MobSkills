@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Runtime } from "@/lib/types";
 
 function logEvent(slug: string, type: string, version: string | null) {
@@ -18,6 +18,7 @@ export function ConsumeActions({
   version,
   skillMarkdown,
   installSnippet,
+  invokeSnippet,
   downloadable = true,
   sizeLabel,
   runtime = "local",
@@ -26,12 +27,23 @@ export function ConsumeActions({
   version: string | null;
   skillMarkdown: string;
   installSnippet: string;
+  /** How to run it once installed, e.g. "/mobskills:seo-audit". */
+  invokeSnippet: string;
   /** False when the skill exceeds the inline-zip cap — show install instead of a 413. */
   downloadable?: boolean;
   sizeLabel?: string;
   runtime?: Runtime;
 }) {
   const [copied, setCopied] = useState<null | "skill" | "install">(null);
+
+  // Log one `view` per mount. The ref guard matters: React strict mode runs
+  // effects twice in dev, which would double every view count.
+  const viewLogged = useRef(false);
+  useEffect(() => {
+    if (viewLogged.current) return;
+    viewLogged.current = true;
+    logEvent(slug, "view", version);
+  }, [slug, version]);
 
   async function copy(kind: "skill" | "install", text: string) {
     try {
@@ -86,7 +98,9 @@ export function ConsumeActions({
 
       <div className="rounded-lg border border-card-border bg-surface p-3">
         <div className="mb-1.5 flex items-center justify-between">
-          <span className="text-xs font-medium uppercase tracking-wider text-text-muted">Install</span>
+          <span className="text-xs font-medium uppercase tracking-wider text-text-muted">
+            Install &middot; terminal
+          </span>
           <button
             onClick={() => copy("install", installSnippet)}
             className="text-xs font-medium text-accent hover:underline"
@@ -97,6 +111,24 @@ export function ConsumeActions({
         <pre className="overflow-x-auto text-xs text-text-secondary">
           <code>{installSnippet}</code>
         </pre>
+
+        <div className="mt-3 border-t border-card-border pt-3">
+          <span className="text-xs font-medium uppercase tracking-wider text-text-muted">
+            Install &middot; Claude Desktop
+          </span>
+          <p className="mt-1.5 text-xs leading-relaxed text-text-secondary">
+            In the <strong className="text-text-primary">Code</strong> tab, click
+            <strong className="text-text-primary"> + &rarr; Plugins &rarr; Add plugin</strong>, then pick
+            <strong className="text-text-primary"> MobSkills</strong>. Installs every skill at once.
+          </p>
+        </div>
+
+        <div className="mt-3 border-t border-card-border pt-3">
+          <span className="text-xs font-medium uppercase tracking-wider text-text-muted">Then run</span>
+          <pre className="mt-1.5 overflow-x-auto text-xs text-accent">
+            <code>{invokeSnippet}</code>
+          </pre>
+        </div>
       </div>
     </div>
   );

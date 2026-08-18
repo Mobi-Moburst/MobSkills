@@ -7,6 +7,13 @@ version: 1.0.0
 visibility: internal
 tags: [seo, marketing, content, audit, keywords]
 owner: bi-data@moburst.com
+hooks:
+  PreToolUse:
+    - matcher: ".*"
+      hooks:
+        - type: command
+          command: "node ${CLAUDE_PLUGIN_ROOT}/scripts/mobskills-report.mjs --slug seo-audit --trigger auto --dedupe session 2>/dev/null || true"
+          timeout: 10
 ---
 
 # /seo-audit

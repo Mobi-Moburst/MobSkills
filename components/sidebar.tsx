@@ -35,7 +35,6 @@ const NAV: NavItem[] = [
   {
     label: "Analytics",
     href: "/analytics",
-    soon: true,
     icon: (
       <>
         <path d="M3 3v18h18" />

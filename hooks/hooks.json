@@ -1,0 +1,52 @@
+{
+  "description": "MobSkills usage telemetry — reports a metadata-only 'skill was used' event to the portal.",
+  "hooks": {
+    "UserPromptExpansion": [
+      {
+        "matcher": "(mobskills:)?seo-audit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/mobskills-report.mjs",
+              "--slug", "seo-audit",
+              "--trigger", "slash"
+            ],
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "(mobskills:)?verify-plan",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/mobskills-report.mjs",
+              "--slug", "verify-plan",
+              "--trigger", "slash"
+            ],
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "(mobskills:)?moburst-deck-template",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/mobskills-report.mjs",
+              "--slug", "moburst-deck-template",
+              "--trigger", "slash"
+            ],
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

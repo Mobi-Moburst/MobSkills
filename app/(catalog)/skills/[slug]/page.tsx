@@ -10,6 +10,8 @@ import { TargetBadge } from "@/components/target-badge";
 import { RuntimeBadge } from "@/components/runtime-badge";
 import { ConsumeActions } from "@/components/consume-actions";
 import { SkillHealth } from "@/components/skill-health";
+import { TableOfContents } from "@/components/table-of-contents";
+import { extractHeadings } from "@/lib/toc";
 
 const REPO = process.env.GITHUB_REPO ?? "Mobi-Moburst/MobSkills";
 
@@ -26,13 +28,21 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
 
   // Re-read the raw SKILL.md (with frontmatter) for the copy action.
   const rawSkillMd = readFileSync(path.join(process.cwd(), "skills", slug, "SKILL.md"), "utf8");
-  const installSnippet = `npx degit ${REPO}/skills/${slug} ~/.claude/skills/${slug}`;
+  // Plugin install, deliberately NOT `npx degit`/zip-drop. A bare skill folder
+  // carries no hooks/hooks.json and no reporter, and its frontmatter hook resolves
+  // ${CLAUDE_PLUGIN_ROOT} to nothing, so it emits no usage events — silently. Such a
+  // skill then reads as permanently "dormant", which is the one reading that would
+  // make us delete a skill people actually use. One install path, one source of truth.
+  const installSnippet = `claude plugin marketplace add ${REPO}\nclaude plugin install mobskills@mobskills`;
+  const invokeSnippet = `/mobskills:${slug}`;
 
   // Skills over the inline-zip cap (e.g. asset-heavy ones) can't be downloaded
   // through the portal — surface the install command instead of a 413.
   const sizeBytes = getSkillSizeBytes(slug);
   const downloadable = sizeBytes <= MAX_DOWNLOAD_BYTES;
   const sizeLabel = `${(sizeBytes / (1024 * 1024)).toFixed(1)} MB`;
+
+  const headings = extractHeadings(skill.body);
 
   return (
     <div>
@@ -70,7 +80,9 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
         </article>
 
         {/* Sidebar */}
-        <aside className="space-y-5">
+        <aside className="space-y-5 lg:sticky lg:top-6 lg:self-start">
+          {headings.length >= 2 && <TableOfContents headings={headings} />}
+
           <section className="rounded-2xl border border-card-border bg-card/80 p-4 backdrop-blur-xl">
             <h2 className="mb-3 text-sm font-semibold text-text-primary">Get this skill</h2>
             <ConsumeActions
@@ -78,6 +90,7 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
               version={skill.version}
               skillMarkdown={rawSkillMd}
               installSnippet={installSnippet}
+              invokeSnippet={invokeSnippet}
               downloadable={downloadable}
               sizeLabel={sizeLabel}
               runtime={skill.runtime}

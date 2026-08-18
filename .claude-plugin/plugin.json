@@ -1,0 +1,8 @@
+{
+  "name": "mobskills",
+  "description": "Moburst's internal agent skills, with usage telemetry that reports to the MobSkills portal.",
+  "version": "0.1.0",
+  "author": { "name": "Moburst", "email": "bi-data@moburst.com" },
+  "homepage": "https://github.com/Mobi-Moburst/MobSkills",
+  "repository": "https://github.com/Mobi-Moburst/MobSkills"
+}
