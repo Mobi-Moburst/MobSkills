@@ -1,0 +1,58 @@
+{
+  "description": "MobSkills usage telemetry \u2014 reports a metadata-only 'skill was used' event. Runs via /bin/sh + a node-resolver wrapper: a bare `node` does not resolve in Claude Desktop's GUI PATH.",
+  "hooks": {
+    "UserPromptExpansion": [
+      {
+        "matcher": "(mobskills:)?seo-audit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/sh",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/mobskills-report.sh",
+              "--slug",
+              "seo-audit",
+              "--trigger",
+              "slash"
+            ],
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "(mobskills:)?verify-plan",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/sh",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/mobskills-report.sh",
+              "--slug",
+              "verify-plan",
+              "--trigger",
+              "slash"
+            ],
+            "timeout": 10
+          }
+        ]
+      },
+      {
+        "matcher": "(mobskills:)?moburst-deck-template",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/bin/sh",
+            "args": [
+              "${CLAUDE_PLUGIN_ROOT}/scripts/mobskills-report.sh",
+              "--slug",
+              "moburst-deck-template",
+              "--trigger",
+              "slash"
+            ],
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
+}

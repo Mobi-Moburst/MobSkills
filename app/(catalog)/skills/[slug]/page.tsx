@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { readFileSync } from "node:fs";
-import path from "node:path";
-import { getAllSkills, getSkill, getSkillSizeBytes, MAX_DOWNLOAD_BYTES } from "@/lib/skills";
+import { getAllSkills, getSkill, getSkillSizeBytes, readRawSkillMd, MAX_DOWNLOAD_BYTES } from "@/lib/skills";
 import { Markdown } from "@/components/markdown";
 import { ExpandableBody } from "@/components/expandable-body";
 import { FileList } from "@/components/file-list";
@@ -27,7 +25,7 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
   if (!skill) notFound();
 
   // Re-read the raw SKILL.md (with frontmatter) for the copy action.
-  const rawSkillMd = readFileSync(path.join(process.cwd(), "skills", slug, "SKILL.md"), "utf8");
+  const rawSkillMd = readRawSkillMd(slug);
   // Plugin install, deliberately NOT `npx degit`/zip-drop. A bare skill folder
   // carries no hooks/hooks.json and no reporter, and its frontmatter hook resolves
   // ${CLAUDE_PLUGIN_ROOT} to nothing, so it emits no usage events — silently. Such a
@@ -158,7 +156,7 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
             <h2 className="mb-3 text-sm font-semibold text-text-primary">Files</h2>
             <FileList files={skill.files} />
             <a
-              href={`https://github.com/${REPO}/tree/main/skills/${skill.slug}`}
+              href={`https://github.com/${REPO}/tree/main/plugin/skills/${skill.slug}`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-3 inline-block text-xs font-medium text-accent hover:underline"

@@ -4,7 +4,7 @@ import path from "node:path";
 import { parseSkill } from "./frontmatter";
 import type { Skill, Target, Visibility, SkillStatus, Runtime } from "./types";
 
-const SKILLS_DIR = path.join(process.cwd(), "skills");
+const SKILLS_DIR = path.join(process.cwd(), "plugin", "skills");
 
 function listFilesRecursive(dir: string, base = dir): string[] {
   const out: string[] = [];
@@ -91,6 +91,13 @@ export function getSkill(slug: string): Skill | null {
  * Hard cap on the inline zip download — kept under Vercel's 4.5 MB response limit.
  * Shared by the download route (enforces 413) and the detail page (hides the button).
  */
+/** Raw SKILL.md including frontmatter (the detail page's copy action needs it).
+ *  Lives here because SKILLS_DIR is owned by this module — the detail page used to
+ *  rebuild the path itself, which silently broke when skills/ moved under plugin/. */
+export function readRawSkillMd(slug: string): string {
+  return readFileSync(path.join(SKILLS_DIR, slug, "SKILL.md"), "utf8");
+}
+
 export const MAX_DOWNLOAD_BYTES = 4 * 1024 * 1024;
 
 /** Total bytes of a skill folder, for the download size guard + UI. Cheap stat, no reads. */

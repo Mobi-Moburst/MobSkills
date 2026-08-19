@@ -8,10 +8,14 @@
   "plugins": [
     {
       "name": "mobskills",
-      "source": "./",
+      "source": "./plugin",
       "description": "Moburst's internal agent skills, with usage telemetry that reports to the MobSkills portal.",
       "category": "productivity",
-      "tags": ["moburst", "internal", "skills"]
+      "tags": [
+        "moburst",
+        "internal",
+        "skills"
+      ]
     }
   ]
 }

@@ -42,3 +42,7 @@ next-env.d.ts
 
 # local telemetry spike store (throwaway; Phase 2 -> Supabase)
 .data/
+
+# Plans live in MobPulse (docs/agent-skills/) — they describe MobPulse
+# internals and must never be committed to this public repo.
+plans/

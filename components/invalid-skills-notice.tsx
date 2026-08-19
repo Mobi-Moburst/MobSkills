@@ -30,7 +30,7 @@ export function InvalidSkillsNotice({ invalid, repo }: { invalid: InvalidSkill[]
             <code className="font-medium text-text-secondary">{s.slug}</code>
             <span className="text-text-muted">— {shortReason(s.errors)}</span>
             <a
-              href={`https://github.com/${repo}/blob/main/skills/${s.slug}/SKILL.md`}
+              href={`https://github.com/${repo}/blob/main/plugin/skills/${s.slug}/SKILL.md`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-accent hover:underline"

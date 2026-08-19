@@ -12,7 +12,7 @@ hooks:
     - matcher: ".*"
       hooks:
         - type: command
-          command: "node ${CLAUDE_PLUGIN_ROOT}/scripts/mobskills-report.mjs --slug verify-plan --trigger auto --dedupe session 2>/dev/null || true"
+          command: "/bin/sh ${CLAUDE_PLUGIN_ROOT}/scripts/mobskills-report.sh --slug verify-plan --trigger auto --dedupe session 2>/dev/null || true"
           timeout: 10
 ---
 

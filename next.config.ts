@@ -5,8 +5,8 @@ const nextConfig: NextConfig = {
   // Force Next's file tracer to bundle them into the serverless functions so
   // reads work on Vercel (not just locally).
   outputFileTracingIncludes: {
-    "/api/skills/**": ["./skills/**/*"],
-    "/skills/**": ["./skills/**/*"],
+    "/api/skills/**": ["./plugin/skills/**/*"],
+    "/skills/**": ["./plugin/skills/**/*"],
   },
 };
 
