@@ -33,8 +33,15 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
   // ${CLAUDE_PLUGIN_ROOT} to nothing, so it emits no usage events — silently. Such a
   // skill then reads as permanently "dormant", which is the one reading that would
   // make us delete a skill people actually use. One install path, one source of truth.
-  const installSnippet = `claude plugin marketplace add ${REPO}\nclaude plugin install mobskills@mobskills`;
-  const invokeSnippet = `/mobskills:${slug}`;
+  // Two audiences. Desktop users install through the plugin browser UI — `/plugin`
+  // is terminal-only ("only available in the Claude Code terminal"), so no shell or
+  // slash command belongs in their path. Skill commands like /mobskills:<slug> DO
+  // work in Desktop's prompt box, which is why `invoke` is shared.
+  const install = {
+    terminalMarketplace: `claude plugin marketplace add ${REPO}`,
+    terminalInstall: `claude plugin install mobskills@mobskills`,
+    invoke: `/mobskills:${slug}`,
+  };
 
   // Skills over the inline-zip cap (e.g. asset-heavy ones) can't be downloaded
   // through the portal — surface the install command instead of a 413.
@@ -50,7 +57,20 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
         ← All skills
       </Link>
 
-      <div className="mt-4 grid grid-cols-1 items-start gap-8 lg:grid-cols-[1fr_300px]" data-detail-grid>
+      {/* minmax(0,1fr) not 1fr: a bare 1fr lets a long code block in the body blow
+          the track out and push the rails off-screen. */}
+      <div
+        className="mt-4 grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[210px_minmax(0,1fr)_360px]"
+        data-detail-grid
+      >
+        {/* Left rail (xl+ only) — moving the TOC out of the right stack is what
+            reclaims the dead space and roughly halves the page height. */}
+        {headings.length >= 2 && (
+          <aside className="hidden xl:block xl:sticky xl:top-6 xl:self-start">
+            <TableOfContents headings={headings} />
+          </aside>
+        )}
+
         {/* Main content */}
         <article className="min-w-0">
           <div className="flex flex-wrap items-center gap-2">
@@ -81,7 +101,11 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
 
         {/* Sidebar */}
         <aside className="space-y-5 lg:sticky lg:top-6 lg:self-start">
-          {headings.length >= 2 && <TableOfContents headings={headings} />}
+          {headings.length >= 2 && (
+            <div className="xl:hidden">
+              <TableOfContents headings={headings} />
+            </div>
+          )}
 
           <section className="rounded-2xl border border-card-border bg-card/80 p-4 backdrop-blur-xl">
             <h2 className="mb-3 text-sm font-semibold text-text-primary">Get this skill</h2>
@@ -89,15 +113,12 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
               slug={skill.slug}
               version={skill.version}
               skillMarkdown={rawSkillMd}
-              installSnippet={installSnippet}
-              invokeSnippet={invokeSnippet}
+              install={install}
               downloadable={downloadable}
               sizeLabel={sizeLabel}
               runtime={skill.runtime}
             />
           </section>
-
-          <SkillHealth skill={skill} />
 
           <section className="rounded-2xl border border-card-border bg-card/80 p-4 text-sm backdrop-blur-xl">
             <h2 className="mb-3 text-sm font-semibold text-text-primary">Details</h2>
@@ -128,6 +149,8 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
               )}
             </dl>
           </section>
+          <SkillHealth skill={skill} />
+
 
           <section className="rounded-2xl border border-card-border bg-card/80 p-4 text-sm backdrop-blur-xl">
             <h2 className="mb-3 text-sm font-semibold text-text-primary">Files</h2>

@@ -14,7 +14,7 @@ export function TableOfContents({ headings }: { headings: Heading[] }) {
             <li key={`${h.slug}-${i}`} className={h.depth === 3 ? "pl-3" : undefined}>
               <a
                 href={`#${h.slug}`}
-                className="block truncate text-text-muted transition-colors hover:text-text-primary"
+                className="block text-text-muted transition-colors hover:text-text-primary line-clamp-2"
               >
                 {h.text}
               </a>

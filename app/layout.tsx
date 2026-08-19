@@ -50,8 +50,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
 
           <div className="md:pl-60">
             {/* Left-aligned (no mx-auto) so content sits next to the sidebar
-                instead of floating to screen-center on wide displays. */}
-            <main className="max-w-7xl px-6 py-8 lg:px-10">{children}</main>
+                instead of floating to screen-center on wide displays. The cap is
+                generous rather than absent: past ~1600px the detail page's third
+                column stops earning its width and lines get hard to track. */}
+            <main className="max-w-[100rem] px-6 py-8 lg:px-10">{children}</main>
           </div>
         </div>
       </body>
