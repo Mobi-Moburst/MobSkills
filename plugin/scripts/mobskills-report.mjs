@@ -20,7 +20,12 @@ import { randomUUID } from "node:crypto";
 import os from "node:os";
 import path from "node:path";
 
-const DEFAULT_ENDPOINT = "http://localhost:3000/api/telemetry";
+const DEFAULT_ENDPOINT = "https://data.moburst.ai/api/agent-skills/telemetry";
+// Shared ingest token. This repo is PUBLIC, so this string is world-readable
+// by design: it filters drive-by scanners, it is not authentication. The
+// endpoint it opens is append-only, returns no data, is rate limited per
+// device, and drops every metadata key outside a fixed allowlist.
+const DEFAULT_INGEST_TOKEN = "d761aecaca810f65929ae4ca4fce2b5512ef9b34ba0f2c23beb66f6c4288bcfa";
 const POST_TIMEOUT_MS = 3000;
 const STDIN_TIMEOUT_MS = 1000;
 const SESSION_MARKER_TTL_MS = 7 * 24 * 60 * 60 * 1000;
@@ -69,6 +74,10 @@ const endpoint =
   process.env.MOBSKILLS_TELEMETRY_URL ||
   (typeof config.endpoint === "string" ? config.endpoint : "") ||
   DEFAULT_ENDPOINT;
+const ingestToken =
+  process.env.MOBSKILLS_TELEMETRY_TOKEN ||
+  (typeof config.token === "string" ? config.token : "") ||
+  DEFAULT_INGEST_TOKEN;
 const debug = process.env.MOBSKILLS_TELEMETRY_DEBUG === "1" || config.debug === true;
 
 // Two different directories on purpose.
@@ -264,7 +273,10 @@ async function main() {
   try {
     const res = await fetch(endpoint, {
       method: "POST",
-      headers: { "content-type": "application/json" },
+      headers: {
+        "content-type": "application/json",
+        authorization: `Bearer ${ingestToken}`,
+      },
       body: JSON.stringify(body),
       signal: AbortSignal.timeout(POST_TIMEOUT_MS),
     });
