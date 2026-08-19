@@ -136,21 +136,16 @@ export function ConsumeActions({
              Settings > Customize > Plugins > Add. The Plugins menu is reachable from
              the Home tab as well, so no Code tab step is needed. */
           <>
-            <Step n={1} label="Open plugin settings">
+            <Step n={1} label="Open the plugin browser">
               <p className="text-xs leading-relaxed text-text-secondary">
-                In Claude Desktop, open <strong className="text-text-primary">Settings</strong> &rarr;{" "}
-                <strong className="text-text-primary">Customize</strong> &rarr;{" "}
-                <strong className="text-text-primary">Plugins</strong>.
-              </p>
-              <p className="mt-1.5 text-xs leading-relaxed text-text-muted">
-                Or click <strong className="text-text-primary">+</strong> next to the prompt box
-                &rarr; <strong className="text-text-primary">Plugins</strong> &rarr;{" "}
+                Click <strong className="text-text-primary">+</strong> next to the prompt box &rarr;{" "}
+                <strong className="text-text-primary">Plugins</strong> &rarr;{" "}
                 <strong className="text-text-primary">Browse plugins</strong>.
               </p>
             </Step>
             <Step n={2} label="Add the library" hint="one time">
               <p className="mb-1.5 text-xs leading-relaxed text-text-secondary">
-                Click <strong className="text-text-primary">Add</strong> &rarr;{" "}
+                Click <strong className="text-text-primary">+</strong> (top right) &rarr;{" "}
                 <strong className="text-text-primary">Add marketplace</strong>, then paste:
               </p>
               <CommandLine
