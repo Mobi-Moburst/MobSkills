@@ -27,6 +27,7 @@ export function ConsumeActions({
   skillMarkdown: string;
   /** Install commands. Only the terminal audience ever sees a command. */
   install: {
+    repo: string;
     terminalMarketplace: string;
     terminalInstall: string;
     /** Shared: skill slash commands DO work in Desktop's prompt box. */
@@ -130,33 +131,38 @@ export function ConsumeActions({
         </div>
 
         {how === "desktop" ? (
-          /* No commands in this path on purpose. `/plugin` is terminal-only — Desktop
-             answers "/plugin is only available in the Claude Code terminal". The menu
-             item is "Browse plugins", not "Add plugin". Skill commands like
-             /mobskills:<slug> DO work in the prompt box (verified). */
+          /* All UI, no commands. `/plugin` is terminal-only ("only available in the
+             Claude Code terminal"), but Desktop CAN register a marketplace itself via
+             Settings > Customize > Plugins > Add. The Plugins menu is reachable from
+             the Home tab as well, so no Code tab step is needed. */
           <>
-            <Step n={1} label="Open the Code tab">
+            <Step n={1} label="Open plugin settings">
               <p className="text-xs leading-relaxed text-text-secondary">
-                In Claude Desktop, click <strong className="text-text-primary">Code</strong> and
-                start or open a session.
+                In Claude Desktop, open <strong className="text-text-primary">Settings</strong> &rarr;{" "}
+                <strong className="text-text-primary">Customize</strong> &rarr;{" "}
+                <strong className="text-text-primary">Plugins</strong>.
               </p>
-            </Step>
-            <Step n={2} label="Open the plugin browser">
-              <p className="text-xs leading-relaxed text-text-secondary">
-                Next to the prompt box click <strong className="text-text-primary">+</strong> &rarr;{" "}
-                <strong className="text-text-primary">Plugins</strong> &rarr;{" "}
+              <p className="mt-1.5 text-xs leading-relaxed text-text-muted">
+                Or click <strong className="text-text-primary">+</strong> next to the prompt box
+                &rarr; <strong className="text-text-primary">Plugins</strong> &rarr;{" "}
                 <strong className="text-text-primary">Browse plugins</strong>.
               </p>
+            </Step>
+            <Step n={2} label="Add the library" hint="one time">
+              <p className="mb-1.5 text-xs leading-relaxed text-text-secondary">
+                Click <strong className="text-text-primary">Add</strong> &rarr;{" "}
+                <strong className="text-text-primary">Add marketplace</strong>, then paste:
+              </p>
+              <CommandLine
+                text={install.repo}
+                copied={copied === "repo"}
+                onCopy={() => copy("repo", install.repo)}
+              />
             </Step>
             <Step n={3} label="Install MobSkills">
               <p className="text-xs leading-relaxed text-text-secondary">
                 Pick <strong className="text-text-primary">MobSkills</strong> from the list and
                 install it. That adds every skill at once.
-              </p>
-              <p className="mt-2 rounded-md border border-accent/25 bg-accent/[0.07] p-2 text-xs leading-relaxed text-text-secondary">
-                <strong className="text-accent">Not in the list?</strong> The library isn&apos;t
-                registered on your machine yet, and Desktop can&apos;t register it. Ask IT to add it
-                for everyone, or use the Terminal tab once.
               </p>
             </Step>
             <Step n={4} label="Use it" hint="type it in the prompt box" last>

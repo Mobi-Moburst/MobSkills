@@ -38,6 +38,8 @@ export default async function SkillDetailPage({ params }: { params: Promise<{ sl
   // slash command belongs in their path. Skill commands like /mobskills:<slug> DO
   // work in Desktop's prompt box, which is why `invoke` is shared.
   const install = {
+    /** Pasted into Desktop's "Add marketplace" field — a value, not a command. */
+    repo: REPO,
     terminalMarketplace: `claude plugin marketplace add ${REPO}`,
     terminalInstall: `claude plugin install mobskills@mobskills`,
     invoke: `/mobskills:${slug}`,
