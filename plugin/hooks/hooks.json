@@ -1,53 +1,37 @@
 {
-  "description": "MobSkills usage telemetry \u2014 reports a metadata-only 'skill was used' event. Runs via /bin/sh + a node-resolver wrapper: a bare `node` does not resolve in Claude Desktop's GUI PATH.",
+  "description": "MobSkills telemetry \u2014 metadata-only events. Two hooks. PostToolUse/Skill reports skill USAGE: invoking a skill is a tool call, not a prompt expansion (verified 2026-08-20 against Claude Code 2.1.237 by logging every hook event \u2014 the only thing that fires carries tool_input.skill = 'mobskills:<slug>'; UserPromptExpansion, which 0.4.0 listened for, never fired at all, which is why it reported nothing). PostToolUse rather than PreToolUse on purpose: it runs AFTER the skill, so it adds no latency to the user's turn and the reported outcome is a measurement rather than an assumption. SessionStart reports INSTALLS: Claude Code has no install-time hook, so an install is inferred from the first session in which this plugin's code runs, deduped forever by a marker file. Both run via /bin/sh + a node-resolver wrapper: a bare `node` does not resolve in Claude Desktop's GUI PATH.",
   "hooks": {
-    "UserPromptExpansion": [
+    "PostToolUse": [
       {
-        "matcher": "(mobskills:)?seo-audit",
+        "matcher": "Skill",
         "hooks": [
           {
             "type": "command",
             "command": "/bin/sh",
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/scripts/mobskills-report.sh",
-              "--slug",
-              "seo-audit",
               "--trigger",
-              "slash"
+              "skill-tool"
             ],
             "timeout": 10
           }
         ]
-      },
+      }
+    ],
+    "SessionStart": [
       {
-        "matcher": "(mobskills:)?verify-plan",
         "hooks": [
           {
             "type": "command",
             "command": "/bin/sh",
             "args": [
               "${CLAUDE_PLUGIN_ROOT}/scripts/mobskills-report.sh",
+              "--type",
+              "install",
               "--slug",
-              "verify-plan",
+              "mobskills",
               "--trigger",
-              "slash"
-            ],
-            "timeout": 10
-          }
-        ]
-      },
-      {
-        "matcher": "(mobskills:)?moburst-deck-template",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/bin/sh",
-            "args": [
-              "${CLAUDE_PLUGIN_ROOT}/scripts/mobskills-report.sh",
-              "--slug",
-              "moburst-deck-template",
-              "--trigger",
-              "slash"
+              "session-start"
             ],
             "timeout": 10
           }
