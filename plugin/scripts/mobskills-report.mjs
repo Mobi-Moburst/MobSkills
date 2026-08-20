@@ -488,6 +488,13 @@ async function main() {
       ...(unattributed ? { reason: "no_slug" } : {}),
       ...(installKind ? { reason: installKind } : {}),
       ...(who ? { user: who } : {}),
+      // The conversation this happened in. An opaque uuid the hook hands us —
+      // it identifies a session, never a person or their work — and it is what
+      // makes "how many sessions reached for a skill" and "skills per session"
+      // answerable. Absent in the hosted sandbox, which runs no hook.
+      ...(typeof payload?.session_id === "string" && payload.session_id
+        ? { session: payload.session_id }
+        : {}),
     },
   };
 
