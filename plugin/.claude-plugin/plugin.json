@@ -1,7 +1,7 @@
 {
   "name": "mobskills",
   "description": "Moburst's internal agent skills, with usage telemetry.",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "author": {
     "name": "Moburst",
     "email": "bi-data@moburst.com"
