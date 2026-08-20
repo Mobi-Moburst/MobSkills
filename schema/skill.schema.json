@@ -54,7 +54,7 @@
     "status": {
       "enum": ["active", "deprecated"],
       "default": "active",
-      "description": "Lifecycle state. 'deprecated' still installs and reads normally, but MobPulse shows a Deprecated badge on the skill card."
+      "description": "Lifecycle state. 'deprecated' still installs and reads normally, but MobPulse shows a Deprecated badge on the skill card. MobPulse treats any value other than 'deprecated' as active rather than reporting it invalid, so a typo fails silently."
     }
   },
   "allOf": [
