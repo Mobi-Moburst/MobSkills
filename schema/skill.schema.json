@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/Mobi-Moburst/MobSkills/schema/skill.schema.json",
   "title": "Moburst Skill frontmatter",
-  "description": "Schema for the YAML frontmatter of every skills/<slug>/SKILL.md file.",
+  "description": "Schema for the YAML frontmatter of every plugin/skills/<slug>/SKILL.md file.",
   "type": "object",
   "required": ["name", "description", "targets"],
   "additionalProperties": true,
@@ -27,7 +27,7 @@
     "version": {
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$",
-      "description": "Semantic version (optional; defaults from the latest git tag)."
+      "description": "Semantic version. Must increase on every edit \u2014 MobPulse's write path rejects a reused or lower version, because two revisions sharing a version are indistinguishable in analytics, retroactively."
     },
     "visibility": {
       "enum": ["public", "internal", "department"],
@@ -50,6 +50,11 @@
       "enum": ["hosted", "local"],
       "default": "local",
       "description": "Where the skill runs: 'hosted' = Anthropic cloud sandbox (claude.ai / Claude Desktop, /mnt/skills paths); 'local' = runs anywhere (Claude Code CLI, Codex)."
+    },
+    "status": {
+      "enum": ["active", "deprecated"],
+      "default": "active",
+      "description": "Lifecycle state. 'deprecated' still installs and reads normally, but MobPulse shows a Deprecated badge on the skill card."
     }
   },
   "allOf": [

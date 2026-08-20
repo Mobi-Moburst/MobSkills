@@ -9,7 +9,7 @@
     {
       "name": "mobskills",
       "source": "./plugin",
-      "description": "Moburst's internal agent skills, with usage telemetry that reports to the MobSkills portal.",
+      "description": "Moburst's internal agent skills, with usage telemetry that reports to MobPulse (Agent Skills).",
       "category": "productivity",
       "tags": [
         "moburst",

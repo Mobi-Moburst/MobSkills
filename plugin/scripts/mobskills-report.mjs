@@ -2,7 +2,9 @@
 // MobSkills telemetry reporter (plan: plans/telemetry-usage-tracking.md, Layer 2).
 //
 // Runs as a Claude Code *command hook* bundled in the MobSkills plugin. Its only
-// job: POST a metadata-only "this skill was used" event to /api/telemetry.
+// job: POST a metadata-only "this skill was used" event to MobPulse's
+// /api/agent-skills/telemetry (DEFAULT_ENDPOINT below), which is where the
+// Agent Skills UI reads usage from.
 //
 // Non-negotiables (plan §7):
 //   - Metadata ONLY. We never read or forward prompt text, file contents, tool
